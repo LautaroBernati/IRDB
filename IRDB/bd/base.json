@@ -1,0 +1,53 @@
+{
+  "usuarios": [
+    {
+      "name": "admin",
+      "email": "admin@admin",
+      "password": 1234,
+      "id": 0
+    },
+    {
+      "name": "asdfa",
+      "email": "asdfasdf",
+      "password": "asdfasdf",
+      "id": 1
+    }
+  ],
+  "restaurantes": [
+    {
+      "name": "",
+      "address": "",
+      "puntos": 0,
+      "tipo": "",
+      "platos": [
+        {
+          "nombre": "",
+          "id": 0,
+          "puntos": 0,
+          "comentarios": [
+            {
+              "usuario": "",
+              "content": ""
+            }
+          ]
+        }
+      ],
+      "comentarios": [
+        {
+          "usuario": "",
+          "content": ""
+        }
+      ],
+      "id": 0
+    },
+    {
+      "name": "asdflk",
+      "address": "asdfasdf",
+      "puntos": 0,
+      "tipo": "asdfasdf",
+      "platos": [],
+      "comentarios": [],
+      "id": 1
+    }
+  ]
+}
