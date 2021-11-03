@@ -4,6 +4,8 @@ import LogIn from '../views/Login.vue'
 import Register from '../views/Register.vue'
 import AgregarResto from '../views/AgregarResto.vue'
 import Usuarios from '../views/Usuarios.vue'
+import VerRestos from '../views/VerRestos.vue'
+import DetalleResto from '../views/DetalleResto.vue'
 
 const routes = [
   {
@@ -30,7 +32,18 @@ const routes = [
     path: '/usuarios',
     name: 'Usuarios',
     component: Usuarios
-  }
+  },
+  {
+    path: '/verRestos',
+    name: 'VerRestos',
+    component: VerRestos
+  },
+  {
+    path: '/DetalleResto/:id',
+    name: 'DetalleResto',
+    component: DetalleResto
+  },
+
 ]
 
 const router = createRouter({

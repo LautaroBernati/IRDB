@@ -24,7 +24,7 @@ export default {
   methods: {
       async login(){
           await this.$store.dispatch('login',{usuario: this.usuario})
-          //this.$router.push({name:'Home'})
+          this.$router.push({name:'Home'})
       }
   }
 };
