@@ -12,6 +12,9 @@ export default {
   getRestaurante() {
     return apiClient.get('/restaurantes')
   },
+  getRestauranteId(id) {
+    return apiClient.get('/restaurantes/' + id)
+  },
   postRestaurante(restaurante) {
     return apiClient.post('/restaurantes/', restaurante)
   },
@@ -19,7 +22,6 @@ export default {
     return apiClient.delete('/restaurantes/' + id)
   },
   putRestaurante(restaurante) {
-      console.log(restaurante)
-      return ('/restaurantes/' + restaurante.id , restaurante)
+      return apiClient.put('/restaurantes/' + restaurante.id , restaurante)
   },
 }

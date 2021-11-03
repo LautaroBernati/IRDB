@@ -1,17 +1,47 @@
 <template>
   <div>
-    <form @submit.prevent="register">
-      <label for="name"> Nombre: </label>
-      <input v-model="usuario.name" type="text" name="name" value />
-
-      <label for="email"> Email: </label>
-      <input v-model="usuario.email" type="text" name="email" value />
-
-      <label for="password"> Password: </label>
-      <input v-model="usuario.password" type="password" name="password" value />
-
-      <button type="submit" name="button">Registrarse</button>
-    </form>
+    <div class="row">
+      <div class="col-4"></div>
+      <div id="form" class="col-4 rounded">
+        <h2><b>Registrarse</b></h2>
+        <form @submit.prevent="register">
+          <input
+            v-model="usuario.name"
+            type="text"
+            name="name"
+            placeholder="Usuario"
+            class="form-control input-lg"
+          />
+          <br>
+          <input
+            v-model="usuario.email"
+            type="text"
+            name="email"
+            placeholder="E-mail"
+            class="form-control input-lg"
+          />
+          <br>
+          <input
+            v-model="usuario.password"
+            type="password"
+            name="password"
+            placeholder="Contraseña"
+            class="form-control input-lg"
+          />
+          <br>
+          <div class="d-grid">
+            <button
+              type="submit"
+              name="button"
+              class="btn btn-dark btn-block mb-3"
+            >
+              Registrarse
+            </button>
+          </div>
+        </form>
+      </div>
+      <div class="col-4"></div>
+    </div>
   </div>
 </template>
 
@@ -40,3 +70,11 @@ export default {
   },
 };
 </script>
+<style>
+#form{
+  background-color: #ffffff;
+  border: double;
+  font-family: 'Lato', sans-serif;
+  margin-top: 7%;
+}
+</style>
