@@ -11,6 +11,12 @@
       "email": "asdfasdf",
       "password": "asdfasdf",
       "id": 1
+    },
+    {
+      "name": "Camila Beczkowski",
+      "email": "cami8bec@gmail.com",
+      "password": "123456",
+      "id": 2
     }
   ],
   "restaurantes": [
@@ -21,15 +27,15 @@
       "tipo": "",
       "platos": [
         {
-          "nombre": "",
-          "id": 0,
-          "puntos": 0,
-          "comentarios": [
-            {
-              "usuario": "",
-              "content": ""
-            }
-          ]
+          "nombre": "Fideos",
+          "id": 0
+        },
+        {
+          "nombre": "Carne con papas",
+          "id": 1
+        },
+        {
+          "nombre": "Tortilla"
         }
       ],
       "comentarios": [
@@ -48,6 +54,23 @@
       "platos": [],
       "comentarios": [],
       "id": 1
+    },
+    {
+      "name": "McDonalds",
+      "address": "Av.Federico Lacroze 2500",
+      "puntos": 0,
+      "tipo": "Comida Rapida",
+      "foto": "",
+      "platos": [
+        {
+          "nombre": "Big Mc"
+        },
+        {
+          "nombre": "Mc Chombo"
+        }
+      ],
+      "comentarios": [],
+      "id": 2
     }
   ]
 }

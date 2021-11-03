@@ -1,6 +1,7 @@
 <template>
   <div class="home">
-    <p>HOME</p>
+    <p>HOME {{this.$store.getters.isLogin}}</p>
+    
     
   </div>
 </template>

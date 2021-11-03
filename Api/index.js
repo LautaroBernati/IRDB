@@ -67,15 +67,16 @@ app.get('/usuarios/:id', function (req, res) {  //endpoint, ruta. Siempre solo u
 });
 
 app.post('/usuario', function (req, res) {  //endpoint, ruta. Siempre solo una respuesta por path.
-    Usuario
-        .findById(req.params.id)
-        .then(data => {
-            res.send(data);
-        })
-        .catch(err => {
-            console.log(err);
-            res.status(404).end(); // enviar error
-        });
+    let usuario = new Usuario()
+    usuario.name = req.body.name
+    usuario.save((err, usuarioAlmacenado) => {
+        if (err) {
+            res.status(500).send('Error')
+        } else {
+            res.status(200).send({usuario: usuarioAlmacenado})
+        }
+    })
+
 });
 
 app.listen(4444);

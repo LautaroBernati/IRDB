@@ -4,7 +4,8 @@
     <router-link to="/login">LogIn</router-link> |
     <router-link to="/register">Register</router-link> |
     <router-link to="/agregarResto">Agregar Restaurante</router-link> |
-    <router-link to="/usuarios">Usuarios</router-link>
+    <router-link to="/usuarios">Usuarios</router-link> |
+    <router-link to="/verRestos">Ver Restaurantes</router-link>
   <router-view/>
   </div>
 </template>
