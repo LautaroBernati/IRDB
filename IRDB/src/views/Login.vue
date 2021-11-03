@@ -1,34 +1,59 @@
 <template>
   <div>
-    <h2>Login</h2>
-    <form @submit.prevent='login'>
-        <p>Usuario: <input type="text" v-model="usuario.email"></p>
-        <p>Contraseña: <input type="password" v-model="usuario.password"></p>
-        
-        <button type="submit">Login</button>
-    </form>
+    <div class="row">
+      <div class="col-4"></div>
+      <div id="login" class="col-4 rounded ">
+        <h2><b>Ingresar</b></h2>
+        <form @submit.prevent="login">
+          <input
+            type="text"
+            v-model="usuario.email"
+            placeholder="Usuario"
+            class="form-control input-lg"
+          />
+          <br />
+          <input
+            type="password"
+            v-model="usuario.password"
+            placeholder="Contraseña"
+            class="form-control input-lg"
+          />
+          <br />
+          <div class="d-grid">
+            <button type="submit" class="btn btn-dark btn-block mb-3">Ingresar</button>
+          </div>
+        </form>
+      </div>
+      <div class="col-4"></div>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
   name: "Login",
-  data(){
-      return{
-          usuario: {
-              email: '',
-              password:''
-          }
-      }
+  data() {
+    return {
+      usuario: {
+        email: "",
+        password: "",
+      },
+    };
   },
   methods: {
-      async login(){
-          await this.$store.dispatch('login',{usuario: this.usuario})
-          this.$router.push({name:'Home'})
-      }
-  }
+    async login() {
+      await this.$store.dispatch("login", { usuario: this.usuario });
+      this.$router.push({ name: "Home" });
+    },
+  },
 };
 </script>
 
 <style>
+#login {
+  background-color: #ffffff;
+  border: double;
+  font-family: 'Lato', sans-serif;
+  margin-top: 7%;
+}
 </style>

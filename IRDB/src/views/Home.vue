@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <p>HOME</p>
-    {{login}}
+    <!--{{login}}-->
     
   </div>
 </template>
@@ -11,7 +11,7 @@ export default {
   name: 'Home',
   data() {
     return {
-      login: this.$store.state.usuario.usuario.email,
+      //login: this.$store.state.usuario.usuario.email,
     }
   }
 }
