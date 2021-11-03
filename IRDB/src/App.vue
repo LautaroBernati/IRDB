@@ -1,14 +1,34 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/login">LogIn</router-link> |
-    <router-link to="/register">Register</router-link> |
-    <router-link to="/agregarResto">Agregar Restaurante</router-link> |
-    <router-link to="/usuarios">Usuarios</router-link> |
-    <router-link to="/verRestos">Ver Restaurantes</router-link>
-  <router-view/>
+<div id="nav">
+    <div id="navNoLogeado" v-if="!isLogin">
+      <router-link to="/">Home</router-link> |
+      <router-link to="/login">LogIn</router-link> |
+      <router-link to="/register">Register</router-link> 
+    <router-view/>
+    </div>
+    <div id="navLogeado" v-if="isLogin">
+      <router-link to="/">Home</router-link> |
+      <router-link to="/login">LogIn</router-link> |
+      <router-link to="/register">Register</router-link> |
+      <router-link to="/agregarResto">Agregar Restaurante</router-link> |
+      <router-link to="/usuarios">Usuarios</router-link> |
+      <router-link to="/verRestos">Ver Restaurantes</router-link>
+    <router-view/>
+    </div>
   </div>
 </template>
+
+<script>
+import { defineComponent } from "vue";
+import { mapGetters } from "vuex";
+
+export default defineComponent({
+  name: "App",
+  computed: {
+    ...mapGetters(["islogin"]),
+  },
+});
+</script>
 
 <style>
 #app {

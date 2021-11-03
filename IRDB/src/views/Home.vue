@@ -1,13 +1,18 @@
 <template>
   <div class="home">
-    <p>HOME {{this.$store.getters.isLogin}}</p>
-    
+    <p>HOME</p>
+    {{login}}
     
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Home'
+  name: 'Home',
+  data() {
+    return {
+      login: this.$store.state.usuario.usuario.email,
+    }
+  }
 }
 </script>
