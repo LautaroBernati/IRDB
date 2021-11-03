@@ -1,0 +1,11 @@
+FALTA:
+- Calificar!!!!!!!!!!!!
+- Comentar
+- Delete (resto - solo admin)
+- Ponerle al usuario un boolean si es admin o no y en base a eso puede hacer mas cosas.
+- Restricciones
+- Solucionar las restricciones del nav (app.vue)
+- Logout
+- Estilos (op)
+- API (op)
+

@@ -1,12 +1,12 @@
 <template>
 <div id="nav">
-    <div id="navNoLogeado" v-if="!isLogin">
+    <div id="navNoLogeado" v-if="isLogin">
       <router-link to="/">Home</router-link> |
       <router-link to="/login">LogIn</router-link> |
       <router-link to="/register">Register</router-link> 
     <router-view/>
     </div>
-    <div id="navLogeado" v-if="isLogin">
+    <div id="navLogeado" v-if="!isLogin">
       <router-link to="/">Home</router-link> |
       <router-link to="/login">LogIn</router-link> |
       <router-link to="/register">Register</router-link> |
