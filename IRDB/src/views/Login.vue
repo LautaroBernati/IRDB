@@ -36,8 +36,8 @@ export default {
   data() {
     return {
       usuario: {
-        email: "admin@admin", //cambiar despues
-        password: "1234",
+        email: "",
+        password: "",
       },
     };
   },

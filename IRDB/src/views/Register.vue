@@ -1,8 +1,11 @@
 <template>
   <div>
+    <header id="headerFondo">
+      <img src="../../public/img/registrarseFondo.jpg" id="registrarseFondo" >
+    
     <div class="row">
       <div class="col-4"></div>
-      <div id="form" class="col-4 rounded">
+      <div id="form" class="col-4 rounded rows">
         <h2><b>Registrarse</b></h2>
         <form @submit.prevent="register">
           <input
@@ -34,6 +37,7 @@
               type="submit"
               name="button"
               class="btn btn-dark btn-block mb-3"
+              id="boton1"
             >
               Registrarse
             </button>
@@ -42,7 +46,9 @@
       </div>
       <div class="col-4"></div>
     </div>
+    </header>
   </div>
+  
 </template>
 
 <script>
@@ -71,10 +77,28 @@ export default {
 };
 </script>
 <style>
+#registrarseFondo{
+  position:absolute;
+  opacity: 0.5;
+  object-fit: cover;
+  height: 650px;
+  width: 100%;
+  z-index: 1;
+}
+.rows{
+  z-index: 2;
+}
+#headerFondo{
+  background-color:#000000 !important;
+}
 #form{
   background-color: #ffffff;
   border: double;
   font-family: 'Lato', sans-serif;
   margin-top: 7%;
+}
+#boton1:hover{
+  background-color:rgb(233, 173, 61);
+  color:#000;
 }
 </style>

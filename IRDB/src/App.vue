@@ -20,9 +20,7 @@
             <router-link to="/register" class="nav-link">Register</router-link>
           </li>
           <li class="nav-item">
-            <router-link to="/agregarResto" class="nav-link"
-              >Agregar Restaurante</router-link
-            >
+            <router-link to="/agregarResto" class="nav-link">Agregar Restaurante</router-link>
           </li>
           <li class="nav-item">
             <router-link to="/usuarios" class="nav-link">Usuarios</router-link>
@@ -43,7 +41,7 @@
       </span>
     </div>
     <div id="linea"></div>
-    <br>
+
     <router-view />
   </div>
 </template>
@@ -66,6 +64,9 @@ export default defineComponent({
   background-color: black;
 }
 body{
-  background-color: #b8b8b8;
+  background-color: #a7a6a6;
+}
+#nav{
+  z-index: 20;
 }
 </style>
