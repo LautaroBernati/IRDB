@@ -6,6 +6,7 @@ import AgregarResto from '../views/AgregarResto.vue'
 import Usuarios from '../views/Usuarios.vue'
 import VerRestos from '../views/VerRestos.vue'
 import DetalleResto from '../views/DetalleResto.vue'
+import Perfil from '../views/Perfil.vue'
 
 const routes = [
   {
@@ -42,6 +43,11 @@ const routes = [
     path: '/DetalleResto/:id',
     name: 'DetalleResto',
     component: DetalleResto
+  },
+  {
+    path: '/Perfil',
+    name: 'Perfil',
+    component: Perfil
   },
 
 ]

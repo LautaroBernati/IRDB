@@ -8,6 +8,7 @@ const store = createStore({
     },
     mutations: {
         SET_USER_DATA(state, usuario) {
+            //validar
             state.usuario = usuario
             console.log(state.usuario)
             localStorage.setItem('usuario', usuario)

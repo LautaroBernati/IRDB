@@ -12,7 +12,9 @@ const DSN = 'mongodb://localhost:27017/IRDB'; // Data source name
 
 app.use(cors());
 
-app.use(express.static('public')); // middleware 
+app.use(express.static('public')); // middleware
+
+app.use(express.json())
 
 app.use(async function (req, res, next) {
     try {
@@ -37,53 +39,7 @@ app.use(async function (req, res, next) {
 
 })
 
-/* app.get('/', function (req, res) {  //endpoint, ruta
-    res.sendFile(__dirname + '/views/index.html');
-}); */
-
-app.post('/usuarios', (req, res) => {
-    req.body.save((rr,usuario)=>res.status(200).send(usuario))
-    
-
-    
-    //Usuario.insertMany(req.body);
-    //console.log(req.body.email);
-
-    /* if(!req.body.name || !req.body.email) {
-        respuesta = {
-         error: true,
-         codigo: 502,
-         mensaje: 'El campo name y email son requeridos'
-        };
-       } else {
-        if(req.body.name !== '' || req.body.email !== '') {
-         respuesta = {
-          error: true,
-          codigo: 503,
-          mensaje: 'El usuario ya fue creado previamente'
-         };
-        } else {
-            usuario = {
-          name: req.body.name,
-          email: req.body.email,
-          password: req.body.password
-         };
-         respuesta = {
-          error: false,
-          codigo: 200,
-          mensaje: 'Usuario creado',
-          respuesta: usuario
-         };
-        }
-       }
-       
-       res.send(respuesta); */
-       
-    
-});    
-
 app.get('/usuarios', function (req, res) {  //endpoint, ruta. Siempre solo una respuesta por path.
-    console.log('entre');
     Usuario.find().select(["email","name"]).then(data => {
         res.send(data);
     })
@@ -93,7 +49,22 @@ app.get('/usuarios', function (req, res) {  //endpoint, ruta. Siempre solo una r
         });
 });
 
-app.get('/usuarios/:id', function (req, res) {  //endpoint, ruta. Siempre solo una respuesta por path.
+app.post('/login', function (req, res) {  //endpoint, ruta. Siempre solo una respuesta por path.
+    //Usuario.find({email:req.body.email,password:req.body.password}).then(data => {
+    console.log();
+    console.log(req.body);
+    res.end();
+    /* Usuario.find(usuario=>usuario.email===req.body.email && usuario.password===req.body.password).then(data => {
+        res.send(data);
+    })
+        .catch(err => {
+            console.log(err);
+            res.send(null);
+            //res.status(404).end(); // enviar error
+        }); */
+});
+
+app.get('/usuarios/:id', function (req, res) {  //endpoint, ruta. Siempre solo una respuesta por path. lo mas cercano a lo ideal
     Usuario
         .findById(req.params.id)
         .then(data => {
@@ -103,14 +74,17 @@ app.get('/usuarios/:id', function (req, res) {  //endpoint, ruta. Siempre solo u
             console.log(err);
             res.status(404).end(); // enviar error
         });
-});
+}); //lo mas cercano a lo ideal
 
-app.post('/usuario', function (req, res) {  //endpoint, ruta. Siempre solo una respuesta por path.
-    let usuario = new Usuario()
-    usuario.name = req.body.name
+app.post('/usuarios', function (req, res) {  //endpoint, ruta. Siempre solo una respuesta por path.
+    let usuario = new Usuario({
+        name:req.body.name,
+        password:req.body.password,
+        email:req.body.email
+    })
     usuario.save((err, usuarioAlmacenado) => {
         if (err) {
-            res.status(500).send('Error')
+            res.status(422).send('Error')
         } else {
             res.status(200).send({usuario: usuarioAlmacenado})
         }
@@ -119,7 +93,3 @@ app.post('/usuario', function (req, res) {  //endpoint, ruta. Siempre solo una r
 });
 
 app.listen(4444);
-
-//let data = Category.find();
-
-//console.log(data)

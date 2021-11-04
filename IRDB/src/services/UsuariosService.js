@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const apiClient = axios.create({
-  baseURL: `http://localhost:3000`, //Hay que poner 4444 para la api
+  baseURL: `http://localhost:4444`, //Hay que poner 4444 para la api
   headers: {
     Accept: 'application/json',
     'Content-Type': 'application/json'
@@ -9,6 +9,9 @@ const apiClient = axios.create({
 })
 
 export default {
+  logUserByEmailAndPassword(usuario) {
+    return apiClient.post('/login', usuario)
+  },
   getUsuario() {
     return apiClient.get('/usuarios')
   },

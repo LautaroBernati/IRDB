@@ -28,14 +28,16 @@
             <router-link to="/usuarios" class="nav-link">Usuarios</router-link>
           </li>
           <li class="nav-item">
-            <router-link to="/verRestos" class="nav-link"
-              >Ver Restaurantes</router-link
-            >
+            <router-link to="/verRestos" class="nav-link">Ver Restaurantes</router-link>
           </li>
+          
 
           <!-- </div> -->
         </ul>
       </div>
+      <span class="nav-item justify-content-md-end">
+          <router-link to="/Perfil" class="nav-link text-light">Perfil</router-link>
+      </span>
       <span class="nav-item justify-content-md-end">
         <a class="nav-link text-light">Logout</a>
       </span>

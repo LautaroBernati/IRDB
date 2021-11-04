@@ -4,7 +4,7 @@
       <div class="col-4"></div>
       <div id="login" class="col-4 rounded ">
         <h2><b>Ingresar</b></h2>
-        <form @submit.prevent="login">
+        <form @submit.prevent="ValidarUsuario">
           <input
             type="text"
             v-model="usuario.email"
@@ -18,7 +18,7 @@
             placeholder="Contraseña"
             class="form-control input-lg"
           />
-          <br />
+          <br/>
           <div class="d-grid">
             <button type="submit" class="btn btn-dark btn-block mb-3">Ingresar</button>
           </div>
@@ -30,21 +30,37 @@
 </template>
 
 <script>
+import UsuariosService from "@/services/UsuariosService.js";
 export default {
   name: "Login",
   data() {
     return {
       usuario: {
-        email: "",
-        password: "",
+        email: "admin@admin", //cambiar despues
+        password: "1234",
       },
     };
   },
   methods: {
     async login() {
+      
       await this.$store.dispatch("login", { usuario: this.usuario });
-      this.$router.push({ name: "Home" });
+      //this.$router.push({ name: "Home" });
     },
+    async ValidarUsuario(){
+      console.log(this.usuario);
+      let usuarioLogeado = await UsuariosService.logUserByEmailAndPassword(this.usuario);
+      console.log(usuarioLogeado.data);
+      /* if(usuarioLogeado==null){
+        alert('no encontre nada de nada')
+        this.usuario.email=""
+        this.usuario.password=""
+      } else{
+        console.log(usuarioLogeado);
+        //login();
+        alert('ok')
+        } */
+    }
   },
 };
 </script>

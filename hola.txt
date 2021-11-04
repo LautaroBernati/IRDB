@@ -9,3 +9,4 @@ FALTA:
 - Estilos (op)
 - API (op)
 
+- Buscar la manera de encriptar/usar token en el login
