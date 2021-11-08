@@ -27,7 +27,7 @@ export default {
         UsuariosService.getUsuario().then(
             data => {
                 this.users=data.data;
-                console.log(data);
+                
             }
         )
     },

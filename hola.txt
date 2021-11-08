@@ -8,5 +8,7 @@ FALTA:
 - Logout
 - Estilos (op)
 - API (op)
+- sacar console.log() 
+- revisar sintaxis
 
 - Buscar la manera de encriptar/usar token en el login

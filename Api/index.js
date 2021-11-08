@@ -39,6 +39,8 @@ app.use(async function (req, res, next) {
 
 })
 
+app
+
 app.get('/usuarios', function (req, res) {  //endpoint, ruta. Siempre solo una respuesta por path.
     Usuario.find().select(["email","name"]).then(data => {
         res.send(data);
@@ -49,21 +51,25 @@ app.get('/usuarios', function (req, res) {  //endpoint, ruta. Siempre solo una r
         });
 });
 
-app.post('/login', function (req, res) {  //endpoint, ruta. Siempre solo una respuesta por path.
-    //Usuario.find({email:req.body.email,password:req.body.password}).then(data => {
-    console.log();
-    console.log(req.body);
-    res.end();
-    /* Usuario.find(usuario=>usuario.email===req.body.email && usuario.password===req.body.password).then(data => {
+ app.post('/login', function (req, res) {  //endpoint, ruta. Siempre solo una respuesta por path.
+
+    let usuarioPromise = { 
+        
+        email: req.body.email, 
+        password: req.body.password
+    };
+
+    console.log(usuarioPromise);
+
+     Usuario.find(usuarioPromise).then(data => {
         res.send(data);
     })
         .catch(err => {
             console.log(err);
             res.send(null);
             //res.status(404).end(); // enviar error
-        }); */
+        }); 
 });
-
 app.get('/usuarios/:id', function (req, res) {  //endpoint, ruta. Siempre solo una respuesta por path. lo mas cercano a lo ideal
     Usuario
         .findById(req.params.id)

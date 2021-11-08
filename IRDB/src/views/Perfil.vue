@@ -1,8 +1,8 @@
 <template>
   <div>
     <div>
-      <p>Nombre de usuario:</p>
-      <p>Contraseña:</p>
+      <p>email: {{this.$store.state.usuario.email}}</p>
+      <!--<p>Nombre de usuario : </p>-->
       <button @click="AbrirForm">Editar</button>
     </div>
     <div>
@@ -42,8 +42,8 @@
 import UsuariosService from "@/services/UsuariosService.js";
 export default {
     created(){
-        let idUsuario = this.$store.state.usuario.usuario.id
-        UsuariosService.getRestauranteId(idUsuario).then(
+        let idUsuario = this.$store.state.usuario.id
+        UsuariosService.getUsuarioId(idUsuario).then(
             data => {
                 this.usuario=data.data;
                 console.log(data);
@@ -54,7 +54,7 @@ export default {
         return{
             mostrarForm:false,
             usuario: {
-                name: "",
+                id: "",
                 email: "",
                 password: "",
             }

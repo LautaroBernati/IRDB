@@ -51,7 +51,8 @@ export default {
 .textoFondo{
   position: absolute;
   top: 50%;
-  text-align: center;
-  left:26.5%;
+  text-align: left;
+  left:2%; 
+  font-size: 1.5em
 }
 </style>

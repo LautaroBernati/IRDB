@@ -6,7 +6,7 @@
         <h2><b>Ingresar</b></h2>
         <form @submit.prevent="ValidarUsuario">
           <input
-            type="text"
+            type="email"
             v-model="usuario.email"
             placeholder="Usuario"
             class="form-control input-lg"
@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import UsuariosService from "@/services/UsuariosService.js";
+//import UsuariosService from "@/services/UsuariosService.js";
 export default {
   name: "Login",
   data() {
@@ -45,22 +45,24 @@ export default {
     async login() {
       
       await this.$store.dispatch("login", { usuario: this.usuario });
-      //this.$router.push({ name: "Home" });
+      this.$router.push({ name: "Home" });
     },
-    async ValidarUsuario(){
-      console.log(this.usuario);
+/*     async ValidarUsuario(){
+      
       let usuarioLogeado = await UsuariosService.logUserByEmailAndPassword(this.usuario);
-      console.log(usuarioLogeado.data);
-      /* if(usuarioLogeado==null){
-        alert('no encontre nada de nada')
-        this.usuario.email=""
-        this.usuario.password=""
+      
+      console.log(usuarioLogeado.us);
+      
+/      if(usuarioLogeado!=null){
+        
+        this.login();
+      
       } else{
-        console.log(usuarioLogeado);
-        //login();
-        alert('ok')
-        } */
-    }
+        
+        alert('Usuario incorrecto');
+       
+       }  
+    } */
   },
 };
 </script>

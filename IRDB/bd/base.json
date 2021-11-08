@@ -33,44 +33,9 @@
   ],
   "restaurantes": [
     {
-      "name": "",
-      "address": "",
-      "puntos": 0,
-      "tipo": "",
-      "platos": [
-        {
-          "nombre": "Fideos",
-          "id": 0
-        },
-        {
-          "nombre": "Carne con papas",
-          "id": 1
-        },
-        {
-          "nombre": "Tortilla"
-        }
-      ],
-      "comentarios": [
-        {
-          "usuario": "",
-          "content": ""
-        }
-      ],
-      "id": 0
-    },
-    {
-      "name": "asdflk",
-      "address": "asdfasdf",
-      "puntos": 0,
-      "tipo": "asdfasdf",
-      "platos": [],
-      "comentarios": [],
-      "id": 1
-    },
-    {
       "name": "McDonalds",
       "address": "Av.Federico Lacroze 2500",
-      "puntos": 0,
+      "puntos": 88,
       "tipo": "Comida Rapida",
       "foto": "",
       "platos": [
@@ -82,10 +47,19 @@
         },
         {
           "nombre": "Papas"
+        },
+        {
+          "nombre": "cuarto de libra"
+        },
+        {
+          "nombre": "Angus"
         }
       ],
+      "listaVotantes": [
+        0
+      ],
       "comentarios": [],
-      "id": 2
+      "id": 0
     }
   ]
 }

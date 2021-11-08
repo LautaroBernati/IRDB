@@ -1,6 +1,6 @@
 <template>
   <div>
-    <form @submit.prevent="register">
+    <form @submit.prevent="crearRestaurante">
       <label for="name"> Nombre: </label>
       <input v-model="restaurante.name" type="text" name="name" value />
 
@@ -18,7 +18,7 @@
 <script>
 import RestaurantesService from "@/services/RestaurantesService.js";
 export default {
-  name: "Register",
+  name: "crearRestaurante",
   data() {
     return {
       restaurante: {
@@ -28,12 +28,13 @@ export default {
         tipo: "",
         foto: "",
         platos: [],
+        listaVotantes:[],
         comentarios: []
       },
     };
   },
   methods: {
-    async register() {
+    async crearRestaurante() {
       try {
         await RestaurantesService.postRestaurante(this.restaurante);
         this.$router.push({ name: "Home" });
