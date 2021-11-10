@@ -11,14 +11,18 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="resto in restos" v-bind:key="resto.id">
+        <tr v-for="(resto,index) in restos" v-bind:key="index">
           <td>{{ resto.name }}</td>
           <td>{{ resto.address }}</td>
           <td>{{ calcularPromedio(resto)}}</td>
           <td>{{ resto.tipo }}</td>
           <button @click="verDetalle(resto.id)">Ver</button>
-          <button v-if="esAdmin()" @click="borrarResto(resto.id)">Eliminar</button>
+          <button v-if="esAdmin()" @click="borrarResto(index)">Eliminar</button>
+          <button v-if="esAdmin()" @click="modificarResto(index)">Modificar</button>
         </tr>
+        <div v-if="verInput">
+          <input v-model="modificarModel"/><button @click="confirmarModificacion">Confirmar</button>
+        </div>
       </tbody>
     </table>
   </div>
@@ -36,6 +40,9 @@ export default {
   data() {
     return {
       restos: [],
+      modificarModel: "",
+      indiceResto: -1,
+      modificar: false,
     };
   },
   methods: {
@@ -51,10 +58,20 @@ export default {
     esAdmin(){
         return this.$store.state.usuario.esAdmin;
     },
-    async borrarResto(idResto){
-        await RestaurantesService.deleteRestaurante(idResto);
-        this.restos.splice(idResto,1); //hay que buscarlo segun id, y no segun index .find()
+    async borrarResto(indexResto){
+        await RestaurantesService.deleteRestaurante(indexResto);
+        this.restos.splice(indexResto,1); 
+    },
+    modificarResto(indexResto) {
+      this.verInput()
+      let r = this.restos[indexResto]
+      this.indiceResto = indexResto;
+      this.modificarModel = r.name;
+    },
+    verInput() {
+      this.modificar = !this.modificar
     }
+
   },
 };
 </script>

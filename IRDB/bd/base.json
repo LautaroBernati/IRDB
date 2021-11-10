@@ -52,10 +52,10 @@
       "foto": "",
       "platos": [
         {
-          "nombre": "Big Mc"
+          "nombre": "Doble cuarto"
         },
         {
-          "nombre": "Pancitos"
+          "nombre": "Pan"
         },
         {
           "nombre": "Cuarto de Libra"
@@ -66,7 +66,12 @@
         2,
         0
       ],
-      "comentarios": [],
+      "comentarios": [
+        {
+          "comentario": "Soy fan desde que soy adolescente",
+          "usuario": "admin@admin"
+        }
+      ],
       "id": 0
     },
     {
@@ -80,10 +85,7 @@
           "nombre": "un platito"
         },
         {
-          "nombre": "Papas Fritas"
-        },
-        {
-          "nombre": "Pan"
+          "nombre": "Panes"
         }
       ],
       "listaVotantes": [
@@ -93,7 +95,7 @@
       ],
       "comentarios": [
         {
-          "comentario": "muy buena la mc chombo",
+          "comentario": "muy buena la mc chombo pero muy chica",
           "usuario": "admin@admin"
         },
         {
