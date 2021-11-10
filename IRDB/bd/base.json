@@ -4,38 +4,50 @@
       "name": "admin",
       "email": "admin@admin",
       "password": 1234,
-      "id": 0
+      "id": 0,
+      "esAdmin": true
     },
     {
       "name": "asdfa",
       "email": "asdfasdf",
       "password": "asdfasdf",
-      "id": 1
+      "id": 1,
+      "esAdmin": false
     },
     {
       "name": "Camila Beczkowski",
       "email": "cami8bec@gmail.com",
       "password": "123456",
-      "id": 2
+      "id": 2,
+      "esAdmin": false
     },
     {
       "name": "Lautaro",
       "email": "lau@lau",
       "password": "12345",
-      "id": 3
+      "id": 3,
+      "esAdmin": false
     },
     {
       "name": "Juan",
       "email": "juan@gmail.com",
       "password": "12345",
-      "id": 4
+      "id": 4,
+      "esAdmin": false
+    },
+    {
+      "name": "Ian-kun",
+      "email": "ian@ian.com",
+      "password": "7777",
+      "esAdmin": false,
+      "id": 5
     }
   ],
   "restaurantes": [
     {
       "name": "McDonalds",
       "address": "Av.Federico Lacroze 2500",
-      "puntos": 88,
+      "puntos": 18,
       "tipo": "Comida Rapida",
       "foto": "",
       "platos": [
@@ -43,23 +55,53 @@
           "nombre": "Big Mc"
         },
         {
-          "nombre": "Mc Chombo"
+          "nombre": "Pancitos"
         },
         {
-          "nombre": "Papas"
-        },
-        {
-          "nombre": "cuarto de libra"
-        },
-        {
-          "nombre": "Angus"
+          "nombre": "Cuarto de Libra"
         }
       ],
       "listaVotantes": [
+        1,
+        2,
         0
       ],
       "comentarios": [],
       "id": 0
+    },
+    {
+      "name": "Burger King",
+      "address": "Av. Alberdi 111",
+      "puntos": 11,
+      "tipo": "Comida Rapida",
+      "foto": "",
+      "platos": [
+        {
+          "nombre": "un platito"
+        },
+        {
+          "nombre": "Papas Fritas"
+        },
+        {
+          "nombre": "Pan"
+        }
+      ],
+      "listaVotantes": [
+        0,
+        13,
+        22
+      ],
+      "comentarios": [
+        {
+          "comentario": "muy buena la mc chombo",
+          "usuario": "admin@admin"
+        },
+        {
+          "comentario": "la gaseosa me llego caliente",
+          "usuario": "admin@admin"
+        }
+      ],
+      "id": 1
     }
   ]
 }

@@ -61,6 +61,7 @@ export default {
         name: "",
         email: "",
         password: "",
+        esAdmin:false
       },
     };
   },
