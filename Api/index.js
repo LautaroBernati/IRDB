@@ -10,6 +10,10 @@ const cors = require('cors');
 
 const DSN = 'mongodb://localhost:27017/IRDB'; // Data source name
 
+const service = require('./services/index');
+
+const bcrypt = require('bcryptjs');
+
 app.use(cors());
 
 app.use(express.static('public')); // middleware
@@ -21,7 +25,7 @@ app.use(async function (req, res, next) {
         await mongoose.connect(DSN, {
             serverSelectionTimeoutMS: 3000
         }); // async //ORM: Object Relational Mapper 
-        
+
         mongoose.connection.on('error', err => {
             console.log(err);
             res.status(500).end();
@@ -39,10 +43,8 @@ app.use(async function (req, res, next) {
 
 })
 
-app
-
 app.get('/usuarios', function (req, res) {  //endpoint, ruta. Siempre solo una respuesta por path.
-    Usuario.find().select(["email","name"]).then(data => {
+    Usuario.find().select(["email", "name"]).then(data => {
         res.send(data);
     })
         .catch(err => {
@@ -51,30 +53,25 @@ app.get('/usuarios', function (req, res) {  //endpoint, ruta. Siempre solo una r
         });
 });
 
- app.post('/login', function (req, res) {  //endpoint, ruta. Siempre solo una respuesta por path.
-
-    let usuarioPromise = { 
+app.post('/login', function (req, res) {  //endpoint, ruta. Siempre solo una respuesta por path.
+    Usuario.findOne({email: req.body.email}).exec().then(data => {
+        if(bcrypt.compareSync(req.body.password, data.password)){
+            res.status(200).send({ token: service.createToken(data) });
+        }else {
+          res.status(404).send(err.message);
+        };
         
-        email: req.body.email, 
-        password: req.body.password
-    };
-
-    console.log(usuarioPromise);
-
-     Usuario.find(usuarioPromise).then(data => {
-        res.send(data);
     })
         .catch(err => {
             console.log(err);
-            res.send(null);
-            //res.status(404).end(); // enviar error
-        }); 
+            res.status(404).send(err.message); // enviar error
+        });
 });
 app.get('/usuarios/:id', function (req, res) {  //endpoint, ruta. Siempre solo una respuesta por path. lo mas cercano a lo ideal
     Usuario
         .findById(req.params.id)
         .then(data => {
-            res.send(data);
+            res.send({ token: service.createToken(data) });
         })
         .catch(err => {
             console.log(err);
@@ -83,19 +80,25 @@ app.get('/usuarios/:id', function (req, res) {  //endpoint, ruta. Siempre solo u
 }); //lo mas cercano a lo ideal
 
 app.post('/usuarios', function (req, res) {  //endpoint, ruta. Siempre solo una respuesta por path.
-    let usuario = new Usuario({
-        name:req.body.name,
-        password:req.body.password,
-        email:req.body.email
-    })
-    usuario.save((err, usuarioAlmacenado) => {
-        if (err) {
-            res.status(422).send('Error')
-        } else {
-            res.status(200).send({usuario: usuarioAlmacenado})
-        }
-    })
-
+    bcrypt.genSalt(10, function(err, salt) {
+        bcrypt.hash(req.body.password, salt, function(err, hash) {  
+            if(err){
+                console.log(err.message)
+                res.end()
+            }
+            let usuario = new Usuario({
+                name: req.body.name,
+                email: req.body.email,
+                password: hash
+            })
+            usuario.save().then(data => {
+                res.status(200).send()
+            }
+            ).catch(err => {
+                res.status(422).send(err.message)
+            })
+        });
+    });
 });
 
 app.listen(4444);

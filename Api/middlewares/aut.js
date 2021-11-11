@@ -1,10 +1,10 @@
-const jwt =  require('jwt-simple'); 
+const jwt =  require('jwt-simple'); //json web token
 
-const moment = require('moment');
+const moment = require('moment');//librería npm para el tiempo
 
-const config = require('../config'); 
+const config = require('../config'); //export del SECRET_TOKEN
 
-function isAuth( req, res, next) { 
+function isAuth( req, res, next) { //este método se fija si el token es válido
 
     if(!req.headers.authorization){ 
 
