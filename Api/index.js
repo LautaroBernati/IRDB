@@ -14,6 +14,8 @@ const service = require('./services/index');
 
 const bcrypt = require('bcryptjs');
 
+const aut = require('./middlewares/aut');
+
 app.use(cors());
 
 app.use(express.static('public')); // middleware
@@ -58,7 +60,7 @@ app.post('/login', function (req, res) {  //endpoint, ruta. Siempre solo una res
         if(bcrypt.compareSync(req.body.password, data.password)){
             res.status(200).send({ token: service.createToken(data) });
         }else {
-          res.status(404).send(err.message);
+          res.status(404).send();
         };
         
     })
@@ -80,25 +82,51 @@ app.get('/usuarios/:id', function (req, res) {  //endpoint, ruta. Siempre solo u
 }); //lo mas cercano a lo ideal
 
 app.post('/usuarios', function (req, res) {  //endpoint, ruta. Siempre solo una respuesta por path.
+/*     const u = aut.tokenToObject(req.body.usuario) */
     bcrypt.genSalt(10, function(err, salt) {
-        bcrypt.hash(req.body.password, salt, function(err, hash) {  
-            if(err){
-                console.log(err.message)
-                res.end()
-            }
+        bcrypt.hash(req.body.password, salt).then(hash =>{
             let usuario = new Usuario({
                 name: req.body.name,
                 email: req.body.email,
                 password: hash
             })
             usuario.save().then(data => {
-                res.status(200).send()
+                res.status(201).send()
             }
             ).catch(err => {
                 res.status(422).send(err.message)
             })
+        }).catch(err => {  
+            console.log(err.message)
+            res.end()
         });
     });
 });
+
+app.put('/perfil', function(req, res) {
+    //falta el tema del token :)
+    Usuario.findOneAndUpdate({email: req.body.email}, { name: req.body.name})
+    .then(data => {
+        if(data != null){
+            res.status(200).send()
+        }else{
+            res.status(404).send()
+        }
+    }).catch(err => {
+        res.status(500).send()
+    })
+})
+
+app.delete('/eliminarUsuario', function(req, res) {
+    Usuario.findOneAndDelete({email: req.body.email}).then(data => {
+        if(data != null){
+            res.status(200).send()
+        }else{
+            res.status(404).send()
+        }
+    }).catch(err => {
+        res.status(500).send()
+    })
+})
 
 app.listen(4444);

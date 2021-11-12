@@ -27,9 +27,24 @@ function isAuth( req, res, next) { //este método se fija si el token es válido
     next();
 
 }
+function tokenToObject(req, res, next){
+    const token = req.body.usuario
+    const payload = jwt.decode(token, config.SECRET_TOKEN);
+
+    if(payload != null){
+        return res.status(200).send({
+            name: payload.name,
+            password: payload.password,
+            email: payload.email
+        })
+    }
+
+    next()
+}
 
 module.exports = { 
 
-    isAuth
+    isAuth,
+    tokenToObject
 
 }
