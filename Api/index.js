@@ -1,19 +1,11 @@
-const express = require('express') // framework (libreria) sirve para crear aplicaciones 
-
+const express = require('express') // framework (libreria) sirve para crear aplicaciones
 const app = express() // instancia de la app
-
 const mongoose = require('mongoose');
-
 const Usuario = require('./models/usuarios'); // importamos el schema de otra carpeta
-
 const cors = require('cors');
-
 const DSN = 'mongodb://localhost:27017/IRDB'; // Data source name
-
-const service = require('./services/index');
-
+const service = require('./services/index'); //contiene la parte de crear y decodificar tokens
 const bcrypt = require('bcryptjs');
-
 const aut = require('./middlewares/aut');
 
 app.use(cors());
@@ -45,46 +37,47 @@ app.use(async function (req, res, next) {
 
 })
 
-app.get('/usuarios', function (req, res) {  //endpoint, ruta. Siempre solo una respuesta por path.
+app.get('/usuarios', aut.isAuth, function (req, res) {  //endpoint, ruta. Siempre solo una respuesta por path.
     Usuario.find().select(["email", "name"]).then(data => {
         res.send(data);
     })
-        .catch(err => {
+        .catch(err => { //este catch captura errores de la db
             console.log(err);
             res.status(404).end(); // enviar error
         });
 });
 
-app.post('/login', function (req, res) {  //endpoint, ruta. Siempre solo una respuesta por path.
-    Usuario.findOne({email: req.body.email}).exec().then(data => {
-        if(bcrypt.compareSync(req.body.password, data.password)){
-            res.status(200).send({ token: service.createToken(data) });
-        }else {
-          res.status(404).send();
+//app.get('/usuarios', aut.isAuth, (req,res) => {
+//    res.status(200).send({message:'tenes acceso'});
+/* aut.isAuth(req,res)
+.then(data => {
+    console.log('alrighte');
+})
+.catch(err => {
+    console.log('my maity u good der?');
+}); */
+
+//});
+
+app.post('/login', function (req, res) {
+    Usuario.findOne({ email: req.body.email }).exec().then(data => {
+        //deberia haber un if que valide los datos que le llegan del user
+        if (bcrypt.compareSync(req.body.password, data.password)) { //compara la pass hasheada de la req contra la bd
+            res.status(200).send({ token: service.createToken(data) }); //si esta ok, retorna un token
+        } else {
+            res.status(200).send({ message: 'usuario no encontrado' });
         };
-        
     })
         .catch(err => {
             console.log(err);
             res.status(404).send(err.message); // enviar error
         });
 });
-app.get('/usuarios/:id', function (req, res) {  //endpoint, ruta. Siempre solo una respuesta por path. lo mas cercano a lo ideal
-    Usuario
-        .findById(req.params.id)
-        .then(data => {
-            res.send({ token: service.createToken(data) });
-        })
-        .catch(err => {
-            console.log(err);
-            res.status(404).end(); // enviar error
-        });
-}); //lo mas cercano a lo ideal
 
-app.post('/usuarios', function (req, res) {  //endpoint, ruta. Siempre solo una respuesta por path.
-/*     const u = aut.tokenToObject(req.body.usuario) */
-    bcrypt.genSalt(10, function(err, salt) {
-        bcrypt.hash(req.body.password, salt).then(hash =>{
+app.post('/register', function (req, res) {  //register  ------------------CAMBIÉ LA RUTA DE ACA, ANTERIOR: /usuarios. atte: Lautaro
+    /*     const u = aut.tokenToObject(req.body.usuario) */
+    bcrypt.genSalt(10, function (err, salt) {
+        bcrypt.hash(req.body.password, salt).then(hash => {
             let usuario = new Usuario({
                 name: req.body.name,
                 email: req.body.email,
@@ -96,37 +89,62 @@ app.post('/usuarios', function (req, res) {  //endpoint, ruta. Siempre solo una 
             ).catch(err => {
                 res.status(422).send(err.message)
             })
-        }).catch(err => {  
+        }).catch(err => {
             console.log(err.message)
             res.end()
         });
     });
 });
 
-app.put('/perfil', function(req, res) {
-    //falta el tema del token :)
-    Usuario.findOneAndUpdate({email: req.body.email}, { name: req.body.name})
-    .then(data => {
-        if(data != null){
-            res.status(200).send()
-        }else{
-            res.status(404).send()
-        }
-    }).catch(err => {
-        res.status(500).send()
-    })
-})
+app.get('/usuarios/:id', aut.isAuth, function (req, res) {  //endpoint, ruta. Siempre solo una respuesta por path. lo mas cercano a lo ideal
+    Usuario.findById(req.params.id)
+        .then(data => {
+            if (data === null) {
+                return res.status(404).send({
+                    message: 'usuario inexistente'
+                });
+            }
+            return res.send({ token: service.createToken(data) });
+            //return res.send({ data });
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(404).end(); // enviar error
+        });
+}); //lo mas cercano a lo ideal
 
-app.delete('/eliminarUsuario', function(req, res) {
-    Usuario.findOneAndDelete({email: req.body.email}).then(data => {
-        if(data != null){
-            res.status(200).send()
-        }else{
-            res.status(404).send()
+
+
+app.put('/perfil', aut.isAuth, function (req, res) {
+    service.decodeToken(req.body.token).then(decoded => {
+        //console.log(JSON.stringify(decoded));
+        Usuario.findOneAndUpdate({ _id: decoded.id }, {name:decoded.name}) //esto es asi porque solo queremos cambiar nombre
+            .then(data => {
+                if (data != null) {
+                    res.status(200).send({ message: 'Usuario actualizado con exito' })
+                } else {
+                    res.status(200).send({ message: 'No se pudo actualizar el usuario' })
+                }
+            }).catch(err => {
+                console.log(err);
+                res.status(500).send();
+            })
+        }).catch(err => {
+            console.log(err);
+            res.status(500).send(err);
+    });
+});
+
+app.delete('/eliminarUsuario', function (req, res) {
+    Usuario.findOneAndDelete({ email: req.body.email }).then(data => {
+        if (data != null) {
+            res.status(200).send({ message: 'Usuario borrado con exito' })
+        } else {
+            res.status(200).send({ message: 'No se pudo borrar el usuario' })
         }
     }).catch(err => {
-        res.status(500).send()
-    })
-})
+        res.status(500).send(err)
+    });
+});
 
 app.listen(4444);
