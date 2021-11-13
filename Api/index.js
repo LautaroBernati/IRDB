@@ -34,8 +34,7 @@ app.use(async function (req, res, next) {
         console.log(err);
         res.status(500).end();
     }
-
-})
+});
 
 app.get('/usuarios', aut.isAuth, function (req, res) {  //endpoint, ruta. Siempre solo una respuesta por path.
     Usuario.find().select(["email", "name"]).then(data => {
@@ -46,18 +45,6 @@ app.get('/usuarios', aut.isAuth, function (req, res) {  //endpoint, ruta. Siempr
             res.status(404).end(); // enviar error
         });
 });
-
-//app.get('/usuarios', aut.isAuth, (req,res) => {
-//    res.status(200).send({message:'tenes acceso'});
-/* aut.isAuth(req,res)
-.then(data => {
-    console.log('alrighte');
-})
-.catch(err => {
-    console.log('my maity u good der?');
-}); */
-
-//});
 
 app.post('/login', function (req, res) {
     Usuario.findOne({ email: req.body.email }).exec().then(data => {
@@ -113,12 +100,10 @@ app.get('/usuarios/:id', aut.isAuth, function (req, res) {  //endpoint, ruta. Si
         });
 }); //lo mas cercano a lo ideal
 
-
-
 app.put('/perfil', aut.isAuth, function (req, res) {
     service.decodeToken(req.body.token).then(decoded => {
         //console.log(JSON.stringify(decoded));
-        Usuario.findOneAndUpdate({ _id: decoded.id }, {name:decoded.name}) //esto es asi porque solo queremos cambiar nombre
+        Usuario.findOneAndUpdate({ _id: decoded.id }, { name: decoded.name }) //esto es asi porque solo queremos cambiar nombre
             .then(data => {
                 if (data != null) {
                     res.status(200).send({ message: 'Usuario actualizado con exito' })
@@ -129,13 +114,14 @@ app.put('/perfil', aut.isAuth, function (req, res) {
                 console.log(err);
                 res.status(500).send();
             })
-        }).catch(err => {
-            console.log(err);
-            res.status(500).send(err);
+    }).catch(err => {
+        console.log(err);
+        res.status(500).send(err);
     });
 });
 
 app.delete('/eliminarUsuario', function (req, res) {
+    //falta jwt
     Usuario.findOneAndDelete({ email: req.body.email }).then(data => {
         if (data != null) {
             res.status(200).send({ message: 'Usuario borrado con exito' })
