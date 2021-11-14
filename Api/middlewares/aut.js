@@ -4,19 +4,24 @@ const config = require('../config'); //import de la llave SECRET_TOKEN
 const services = require('../services') //import de los metodos para crear y decodificar tokens
 
 
-function isAuth(req, res, next) { //este método se fija si la req TIENE un token o no, y si es valido (no expiró)
+function isAuth(req, res, next) { //este método se fija si la req TIENE un token o no, y si es valido
     if (!req.headers.authorization) {
         return res.status(403).send({ message: 'No tenes autorizacion' });
     }
-    const token = req.headers.authorization.split(" ")[1];
+    const token = req.headers.authorization.split(" ")[1]; //aca divide de la palabra "bearer"
     services.decodeToken(token)
-        .then(response => {
-            req.user = response;
+        .then(decoded => {
+            if(decoded.exp<=moment().unix() || decoded.exp === undefined){ //chequea si el token tiene expiracion, y si es asi, si ya expiro.
+                return res.status(500).send({message: 'Token vencido o inexistente'});
+            }
+            req.user = decoded;
             next();
         })
-        .catch(response => {
+        .catch(err => {
             //res.status(response.status);//hace a la diferencia esto?
-            return res.status(403).send({ message: 'No se pudo validar su token' });
+            //return res.status(403).send({ message: 'No se pudo validar su token' });
+            console.log(err);
+            return res.status(403).send(err);
         })
 }
 

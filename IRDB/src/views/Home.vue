@@ -30,7 +30,7 @@ export default {
 <style>
 #logo{
   position:absolute;
-  top:2%;
+  top:10%;
   left:2%;
   z-index: 1;
 }

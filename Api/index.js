@@ -2,13 +2,12 @@ const express = require('express') // framework (libreria) sirve para crear apli
 const app = express() // instancia de la app
 const mongoose = require('mongoose');
 const Usuario = require('./models/usuarios'); // importamos el schema de otra carpeta
-const Restaurant = require('./models/restaurantes');
 const cors = require('cors');
 const DSN = 'mongodb://localhost:27017/IRDB'; // Data source name
 const service = require('./services/index'); //contiene la parte de crear y decodificar tokens
 const bcrypt = require('bcryptjs');
 const aut = require('./middlewares/aut');
-
+const RestosCtrl = require('./controllers/restos');
 
 app.use(cors());
 
@@ -64,7 +63,6 @@ app.post('/login', function (req, res) {
 });
 
 app.post('/register', function (req, res) {  //register  ------------------CAMBIÉ LA RUTA DE ACA, ANTERIOR: /usuarios. atte: Lautaro
-    /*     const u = aut.tokenToObject(req.body.usuario) */
     bcrypt.genSalt(10, function (err, salt) {
         bcrypt.hash(req.body.password, salt).then(hash => {
             let usuario = new Usuario({
@@ -154,5 +152,7 @@ app.put('/putResto', function (req, res) {
     })
     
 })
+
+app.post('/altaResto', aut.isAuth, RestosCtrl.addRestaurant);
 
 app.listen(4444);
