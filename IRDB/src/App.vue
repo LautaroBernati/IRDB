@@ -7,10 +7,10 @@
             <router-link to="/" class="nav-link">Home</router-link>
           </li>
           <li class="nav-item" >
-            <router-link to="/login" class="nav-link" v-if="!islogin">LogIn</router-link>
+            <router-link to="/login" class="nav-link" v-if="islogin">LogIn</router-link>
           </li>
           <li class="nav-item" >
-            <router-link to="/register" class="nav-link" v-if="!islogin">Register</router-link>
+            <router-link to="/register" class="nav-link" v-if="islogin">Register</router-link>
           </li>
           <li class="nav-item" >
             <router-link to="/agregarResto" class="nav-link" v-if="islogin">Agregar Restaurante</router-link>

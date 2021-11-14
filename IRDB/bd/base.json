@@ -51,9 +51,6 @@
       "tipo": "Comida Rapida",
       "platos": [
         {
-          "nombre": "Doble cuarto"
-        },
-        {
           "nombre": "Pan"
         },
         {
@@ -76,7 +73,7 @@
     {
       "name": "Burger King",
       "address": "Av. Alberdi 111",
-      "puntos": 11,
+      "puntos": 26,
       "tipo": "Comida Rapida",
       "foto": "",
       "platos": [
@@ -90,7 +87,9 @@
       "listaVotantes": [
         0,
         13,
-        22
+        22,
+        4,
+        2000
       ],
       "comentarios": [
         {

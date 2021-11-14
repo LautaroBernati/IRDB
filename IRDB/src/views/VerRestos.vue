@@ -1,30 +1,43 @@
 <template>
   <div>
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Nombre</th>
-          <th>Direccion</th>
-          <th>Promedio de puntos</th>
-          <th>Tipo</th>
-          
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(resto,index) in restos" v-bind:key="index">
-          <td>{{ resto.name }}</td>
-          <td>{{ resto.address }}</td>
-          <td>{{ calcularPromedio(resto)}}</td>
-          <td>{{ resto.tipo }}</td>
-          <button @click="verDetalle(resto.id)">Ver</button>
-          <button v-if="esAdmin()" @click="borrarResto(index)">Eliminar</button>
-          <button v-if="esAdmin()" @click="modificarResto(index)">Modificar</button>
-        </tr>
-        <div v-if="verInput">
-          <input v-model="modificarModel"/><button @click="confirmarModificacion">Confirmar</button>
-        </div>
-      </tbody>
-    </table>
+    <section id="verRestoFondo">
+    <img src="../../public/img/fondoVerResto.jpg" id="verRestoBack" >
+    <div class="row g-0">
+      <div class="col-2"></div>
+      <div class="col-8 tabla ">
+        <table class="table table-dark table-striped tablaRestos">
+          <thead class="table-dark">
+            <tr>
+              <th>Nombre</th>
+              <th>Direccion</th>
+              <th>Promedio de puntos</th>
+              <th>Tipo</th>
+              <th></th>
+              <th></th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(resto,index) in restos" v-bind:key="index">
+              <td>{{ resto.name }}</td>
+              <td>{{ resto.address }}</td>
+              <td>{{ calcularPromedio(resto)}}</td>
+              <td>{{ resto.tipo }}</td>
+              <td><button @click="verDetalle(resto.id)" class="btn btn-secondary">Ver</button></td>
+              <td><button v-if="esAdmin()" @click="borrarResto(index)" class="btn btn-secondary">Eliminar</button></td>
+              <td><button v-if="esAdmin()" @click="modificarResto(index)" class="btn btn-secondary">Modificar</button></td>
+              
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col-2"></div>
+    </div>
+    <div v-if="modificar">
+      <input v-model="modificarModel"/><button @click="confirmarModificacion">Confirmar</button>
+    </div>
+    </section>
+    
   </div>
 </template>
 
@@ -75,3 +88,23 @@ export default {
   },
 };
 </script>
+<style>
+#verRestoFondo{
+  height: 650px;
+  background-color: #000000 !important;
+}
+#verRestoBack{
+  position:absolute;
+  opacity: 0.7;
+  object-fit: cover;
+  height: 650px;
+  width: 100%;
+  z-index: 1;
+}
+.tabla{
+  z-index: 2;
+}
+.tablaRestos{
+  margin-top: 3%;
+}
+</style>

@@ -2,11 +2,13 @@ const express = require('express') // framework (libreria) sirve para crear apli
 const app = express() // instancia de la app
 const mongoose = require('mongoose');
 const Usuario = require('./models/usuarios'); // importamos el schema de otra carpeta
+const Restaurant = require('./models/restaurantes');
 const cors = require('cors');
 const DSN = 'mongodb://localhost:27017/IRDB'; // Data source name
 const service = require('./services/index'); //contiene la parte de crear y decodificar tokens
 const bcrypt = require('bcryptjs');
 const aut = require('./middlewares/aut');
+
 
 app.use(cors());
 
@@ -132,5 +134,25 @@ app.delete('/eliminarUsuario', function (req, res) {
         res.status(500).send(err)
     });
 });
+
+app.put('/putResto', function (req, res) {
+    service.decodeResToken(req.body.token).then(decoded => {
+        Restaurant.findOneAndUpdate({ _id: decoded.id }, {decoded})
+        .then(data => {
+            console.log(data)
+            if (data != null) {
+                res.status(200).send({ message: 'Restaurante actualizado con exito' })
+            } else {
+                res.status(200).send({ message: 'No se pudo actualizar el restaurante' })
+            }
+        }).catch(err => {
+            console.log(err);
+            res.status(500).send(err)
+        })
+    }).catch(err => {
+        res.status(500).send(err);
+    })
+    
+})
 
 app.listen(4444);

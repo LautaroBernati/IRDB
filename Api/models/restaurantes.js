@@ -42,4 +42,4 @@ const Restaurant = new Schema({
 });
  */
 
-module.exports = mongoose.model('Usuario', Restaurant); // genera un modelo internamente y toda la definicion de este modelo.
+module.exports = mongoose.model('Restaurant', Restaurant); // genera un modelo internamente y toda la definicion de este modelo.

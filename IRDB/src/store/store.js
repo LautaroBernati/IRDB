@@ -3,7 +3,7 @@ import { createStore } from 'vuex'
 const store = createStore({
     state() {
         return {
-            usuario: /* null */  {id: 0, email:"admin@admin", password: 1234, esAdmin:true}
+            usuario: /* null */  {id: 1224, email:"admin@admin", password: 1234, esAdmin:true}
         }
     },
     mutations: {

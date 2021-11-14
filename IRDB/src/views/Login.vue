@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="row">
+    <div class="row g-0">
       <div class="col-4"></div>
       <div id="login" class="col-4 rounded ">
         <h2><b>Ingresar</b></h2>
@@ -24,7 +24,7 @@
           </div>
         </form>
       </div>
-      <div class="col-4"></div>
+      <div class="col-4 "></div>
     </div>
   </div>
 </template>
