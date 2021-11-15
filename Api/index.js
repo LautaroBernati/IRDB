@@ -104,7 +104,7 @@ app.get('/usuarios/:id', aut.isAuth, function (req, res) {  //endpoint, ruta. Si
         });
 }); //lo mas cercano a lo ideal
 
-app.put('/perfil', aut.isAuth, function (req, res) {
+app.put('/modificarUsuario', aut.isAuth, function (req, res) {
     service.decodeToken(req.body.token).then(decoded => {
         //console.log(JSON.stringify(decoded));
         Usuario.findOneAndUpdate({ _id: decoded.id }, { name: decoded.name }) //esto es asi porque solo queremos cambiar nombre
@@ -144,7 +144,7 @@ app.delete('/eliminarUsuario', aut.isAuth, function (req, res) { //deleteUsuario
     });
 });
 
-app.delete('/eliminarRestaurant', aut.isAuth, function (req, res) { // deleteRestaurant con token, encontrando por nombre faltaria ver si se puede por id
+app.delete('/eliminarRestaurante', aut.isAuth, function (req, res) { // deleteRestaurant con token, encontrando por nombre faltaria ver si se puede por id
     service.decodeRestoToken(req.body.token).then(decoded => { //ian
         console.log(decoded);
         Restaurant.findOneAndDelete({ _id: decoded.id }).then(data => {
@@ -164,7 +164,7 @@ app.delete('/eliminarRestaurant', aut.isAuth, function (req, res) { // deleteRes
 });
 
 
-app.put('/putResto', aut.isAuth, function (req, res) { //juan
+app.put('/modificarRestaurante', aut.isAuth, function (req, res) { //juan
     service.decodeRestoToken(req.body.token).then(decoded => {
         console.log("a esta altyura decodifico ok");
         console.log(decoded);
@@ -190,7 +190,7 @@ app.put('/putResto', aut.isAuth, function (req, res) { //juan
 // EN LOS USUARIOS HABIAMOS PUESTO EL ISADMIN, AHORA NO LO VAMOS A PONER?
 
 app.get('/restaurantes', aut.isAuth, function (req, res) {  //endpoint, ruta. Siempre solo una respuesta por path.
-    Restaurant.find().select(["name", "address"]).then(data => {
+    Restaurant.find().then(data => {
         res.send(data);
     })
         .catch(err => { //este catch captura errores de la db
@@ -217,6 +217,6 @@ app.get('/restaurantes/:id', aut.isAuth, function (req, res) {
 });
 
 
-app.post('/altaResto', aut.isAuth, RestosCtrl.addRestaurant);
+app.post('/altaRestaurante', aut.isAuth, RestosCtrl.addRestaurant);
 
 app.listen(4444);

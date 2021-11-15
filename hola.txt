@@ -5,17 +5,21 @@ FALTA:
 - Ponerle al usuario un boolean si es admin o no y en base a eso puede hacer mas cosas. ✓
 - Restricciones ✓
 - Solucionar las restricciones del nav (app.vue) ✓
-- Logout 
-- Estilos (op)
-- API (op)
-- sacar console.log() 
-- revisar sintaxis
+- Buscar la manera de encriptar/usar token en el login ✓
+- eliminar platos ✓
+- modificar platos ✓
+- modificar restos ✓
+- eliminar comentarios ✓
+- modificar comentarios ✓
+- API (op) ✓
 
-- Buscar la manera de encriptar/usar token en el login
+- dejar vacio el input de platos y comentarios (detalleResto)
+- agregar tokens front JUAN
+- Logout y login front  
+- Estilos (op) JUAN
+- sacar console.log() (op)
+- mirar los comentarios que no explican (en api mas que nada) 
+- revisar sintaxis (alt shift f) IAN
+- modularizar api (op) CAMI
+- los otros put(op) CAMI (vemos)
 
-
-- eliminar platos
-- modificar platos
-- modificar restos
-- eliminar comentarios
-- modificar comentarios

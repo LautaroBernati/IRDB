@@ -21,9 +21,9 @@
             <tr v-for="(resto,index) in restos" v-bind:key="index">
               <td>{{ resto.name }}</td>
               <td>{{ resto.address }}</td>
-              <td>{{ calcularPromedio(resto)}}</td>
-              <td>{{ resto.tipo }}</td>
-              <td><button @click="verDetalle(resto.id)" class="btn btn-secondary">Ver</button></td>
+              <td>{{ calcularPromedio(resto)}}</td> 
+              <td>{{ resto.Rtype }}</td>
+              <td><button @click="verDetalle(resto._id)" class="btn btn-secondary">Ver</button></td>
               <td><button v-if="esAdmin()" @click="borrarResto(index)" class="btn btn-secondary">Eliminar</button></td>
               <td><button v-if="esAdmin()" @click="modificarResto(index)" class="btn btn-secondary">Modificar</button></td>
               
@@ -46,9 +46,12 @@ import RestaurantesService from "@/services/RestaurantesService.js";
 export default {
   name: "verRestos",
   created() {
-    RestaurantesService.getRestaurante().then((data) => {
-      this.restos = data.data;
-    });
+      RestaurantesService.getRestaurante().then(
+            data => {
+                this.restos=data.data;
+                
+            }
+      )
   },
   data() {
     return {
@@ -56,6 +59,7 @@ export default {
       modificarModel: "",
       indiceResto: -1,
       modificar: false,
+      promedio: 0,
     };
   },
   methods: {
@@ -63,8 +67,8 @@ export default {
       this.$router.push({ name: "DetalleResto", params: { id: idResto } });
     },
     calcularPromedio(resto) {
-      if(resto.listaVotantes.length > 0){
-          return Math.round(resto.puntos / resto.listaVotantes.length*100)/100;
+      if(resto.votersList.length > 0){
+          return Math.round(resto.points / resto.votersList.length*100)/100;
       }
       return 0;
     },

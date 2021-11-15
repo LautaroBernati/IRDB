@@ -2,13 +2,13 @@
   <div>
     <div>
       <div class="marginL1">
-        <h1 class="d-inline">{{ resto.name }}&nbsp;</h1>
+        <h1 class="d-inline">{{ resto.name }}&nbsp;</h1> 
         <img src="../../public/img/star.png" id="iconoEstrella" />
         <p class="d-inline">{{ calcularPromedio }} / 10</p>
-        <p class="d-inline">({{ resto.listaVotantes.length }} votantes)</p>
+        <p class="d-inline">({{ resto.votersList.length }} votantes)</p>
         <br />
         <span class="bg-dark text-light rounded"
-          >&nbsp; {{ resto.tipo }} &nbsp;</span
+          >&nbsp; {{ resto.Rtype }} &nbsp;</span
         >
         <p>{{ resto.address }}</p>
       </div>
@@ -29,11 +29,11 @@
           <div class="col-4"></div>
           <div class="col-4">
             <ul
-              v-for="(p, index) in resto.platos"
+              v-for="(p, index) in resto.dishes"
               v-bind:key="index"
               class="lista rounded bg-dark text-light"
             >
-              <li class="text-center">{{ p.nombre }}</li>
+              <li class="text-center">{{ p.name }}</li>
               <button
                 v-if="esAdmin()"
                 v-on:click="modificarPlato(index)"
@@ -76,14 +76,14 @@
           <div class="col-2"></div>
           <div class="col-8 ">
             <div
-              v-for="(c, index) in resto.comentarios"
+              v-for="(c, index) in resto.comments"
               v-bind:key="index"
               class="lista "
             >
               <div class="card rounded bg-dark text-light" >
                 <div class="card-body">
-                  <h4 class="card-title">{{ c.usuario }}</h4>
-                  <p class="card-text">{{ c.comentario }}</p>
+                  <h4 class="card-title">{{ c.user }}</h4>
+                  <p class="card-text">{{ c.content }}</p>
                   <button v-if="esAdmin()" v-on:click="modificarComment(index) " class="btn btn-warning">
                     Modificar
                   </button>
@@ -115,7 +115,7 @@ export default {
   created() {
     let idResto = this.$route.params.id;
     RestaurantesService.getRestauranteId(idResto).then((data) => {
-      this.resto = data.data;
+      this.resto = data.data.data;
       console.log(this.resto);
     });
   },
@@ -135,7 +135,7 @@ export default {
   computed: {
     puedeVotar() {
       let idUsuario = this.$store.state.usuario.id;
-      let lista = this.resto.listaVotantes;
+      let lista = this.resto.votersList;
 
       console.log(lista);
 
@@ -154,10 +154,10 @@ export default {
       return true;
     },
     calcularPromedio() {
-      if (this.resto.listaVotantes.length >= 1) {
+      if (this.resto.votersList.length >= 1) {
         return (
           Math.round(
-            (this.resto.puntos / this.resto.listaVotantes.length) * 100
+            (this.resto.points / this.resto.votersList.length) * 100
           ) / 100
         );
       }
@@ -173,9 +173,9 @@ export default {
     },
     async agregarModifPlato() {
       if (this.indicePlato === -1) {
-        this.resto.platos.push({ nombre: this.platoModel });
+        this.resto.dishes.push({ name: this.platoModel });
       } else {
-        this.resto.platos[this.indicePlato].nombre = this.platoModel;
+        this.resto.dishes[this.indicePlato].name = this.platoModel;
       }
 
       await RestaurantesService.putRestaurante(this.resto);
@@ -184,28 +184,28 @@ export default {
     },
     async modificarPlato(indexPlato) {
       this.verInput();
-      let p = this.resto.platos[indexPlato];
+      let p = this.resto.dishes[indexPlato];
       this.indicePlato = indexPlato;
-      this.platoModel = p.nombre;
+      this.platoModel = p.name;
     },
     async eliminarPlato(indexPlato) {
-      this.resto.platos.splice(indexPlato, 1);
+      this.resto.dishes.splice(indexPlato, 1);
       await RestaurantesService.putRestaurante(this.resto);
     },
     async calificar() {
       let idUsuario = this.$store.state.usuario.id;
-      this.resto.listaVotantes.push(idUsuario);
-      this.resto.puntos += Number(this.calificacion);
+      this.resto.votersList.push(idUsuario);
+      this.resto.points += Number(this.calificacion);
       await RestaurantesService.putRestaurante(this.resto);
     },
     async agregarModifComentario() {
       if (this.indiceComentario === -1) {
-        this.resto.comentarios.push({
-          comentario: this.comentarioModel,
-          usuario: this.$store.state.usuario.email,
+        this.resto.comments.push({
+          content: this.comentarioModel,
+          user: this.$store.state.usuario.email,
         });
       } else {
-        this.resto.comentarios[this.indiceComentario].comentario =
+        this.resto.comments[this.indiceComentario].content =
           this.comentarioModel;
       }
 
@@ -214,13 +214,13 @@ export default {
       this.comentarioModel = "";
     },
     async eliminarComment(indexComment) {
-      this.resto.comentarios.splice(indexComment, 1);
+      this.resto.comments.splice(indexComment, 1);
       await RestaurantesService.putRestaurante(this.resto);
     },
     async modificarComment(indexComment) {
-      let c = this.resto.comentarios[indexComment];
+      let c = this.resto.comments[indexComment];
       this.indiceComentario = indexComment;
-      this.comentarioModel = c.comentario;
+      this.comentarioModel = c.content;
     },
   },
 };
