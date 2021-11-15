@@ -8,6 +8,7 @@ const service = require('./services/index'); //contiene la parte de crear y deco
 const bcrypt = require('bcryptjs');
 const aut = require('./middlewares/aut');
 const RestosCtrl = require('./controllers/restos');
+const Restaurant = require('./models/restaurantes');
 
 app.use(cors());
 
@@ -38,8 +39,11 @@ app.use(async function (req, res, next) {
 });
 
 app.get('/usuarios', aut.isAuth, function (req, res) {  //endpoint, ruta. Siempre solo una respuesta por path.
+    //habria que ver si devolver un jwt o no aca
     Usuario.find().select(["email", "name"]).then(data => {
+        //aca podria haber un jwt de todos los usuarios...
         res.send(data);
+
     })
         .catch(err => { //este catch captura errores de la db
             console.log(err);
@@ -120,22 +124,51 @@ app.put('/perfil', aut.isAuth, function (req, res) {
     });
 });
 
-app.delete('/eliminarUsuario', function (req, res) {
-    //falta jwt
-    Usuario.findOneAndDelete({ email: req.body.email }).then(data => {
-        if (data != null) {
-            res.status(200).send({ message: 'Usuario borrado con exito' })
-        } else {
-            res.status(200).send({ message: 'No se pudo borrar el usuario' })
-        }
+app.delete('/eliminarUsuario', aut.isAuth, function (req, res) { //deleteUsuario con token
+
+    service.decodeToken(req.body.token).then(decoded => { //ian
+
+        Usuario.findOneAndDelete({ email: decoded.email }).then(data => {
+            if (data != null) {
+                res.status(200).send({ message: 'Usuario borrado con exito' })
+            } else {
+                res.status(200).send({ message: 'No se pudo borrar el usuario' })
+            }
+        }).catch(err => {
+            res.status(500).send(err)
+        });
+
     }).catch(err => {
-        res.status(500).send(err)
+        console.log(err);
+        res.status(500).send(err);
     });
 });
 
-app.put('/putResto', function (req, res) {
-    service.decodeResToken(req.body.token).then(decoded => {
-        Restaurant.findOneAndUpdate({ _id: decoded.id }, {decoded})
+app.delete('/eliminarRestaurant', aut.isAuth, function (req, res) { // deleteRestaurant con token, encontrando por nombre faltaria ver si se puede por id
+    service.decodeRestoToken(req.body.token).then(decoded => { //ian
+        console.log(decoded);
+        Restaurant.findOneAndDelete({ _id: decoded.id }).then(data => {
+            if (data != null) {
+                res.status(200).send({ message: 'Restaurant borrado con exito' })
+            } else {
+                res.status(200).send({ message: 'No se pudo borrar el Restaurant' })
+            }
+        }).catch(err => {
+            res.status(500).send(err)
+        });
+
+    }).catch(err => {
+        console.log(err);
+        res.status(500).send(err);
+    });
+});
+
+
+app.put('/putResto', aut.isAuth, function (req, res) { //juan
+    service.decodeRestoToken(req.body.token).then(decoded => {
+        console.log("a esta altyura decodifico ok");
+        console.log(decoded);
+        Restaurant.findOneAndUpdate({ _id: decoded.id }, decoded)
         .then(data => {
             console.log(data)
             if (data != null) {
@@ -148,10 +181,41 @@ app.put('/putResto', function (req, res) {
             res.status(500).send(err)
         })
     }).catch(err => {
+        console.log(err);
         res.status(500).send(err);
-    })
-    
+    })   
 })
+
+//RESTAURANTE -- POR QUE EL RESTAURANTES DEVUELVE EL USUARIO EN SI PERO EN EL DE ID DEVUELVE UN TOKEN?
+// EN LOS USUARIOS HABIAMOS PUESTO EL ISADMIN, AHORA NO LO VAMOS A PONER?
+
+app.get('/restaurantes', aut.isAuth, function (req, res) {  //endpoint, ruta. Siempre solo una respuesta por path.
+    Restaurant.find().select(["name", "address"]).then(data => {
+        res.send(data);
+    })
+        .catch(err => { //este catch captura errores de la db
+            console.log(err);
+            res.status(404).end(); // enviar error
+        });
+});
+
+app.get('/restaurantes/:id', aut.isAuth, function (req, res) {  
+    Restaurant.findById(req.params.id)
+        .then(data => {
+            if (data === null) {
+                return res.status(404).send({
+                    message: 'restaurant inexistente'
+                });
+            }
+            //return res.send({ token: service.createToken(data) }); LO CAMBIE - CAMI
+            return res.send({ data });
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(404).end(); // enviar error
+        });
+});
+
 
 app.post('/altaResto', aut.isAuth, RestosCtrl.addRestaurant);
 
