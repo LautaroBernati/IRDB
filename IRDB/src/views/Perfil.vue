@@ -1,75 +1,91 @@
 <template>
   <div>
-    <div>
-      <p>email: {{this.$store.state.usuario.email}}</p>
-      <!--<p>Nombre de usuario : </p>-->
-      <button @click="AbrirForm">Editar</button>
-    </div>
-    <div>
-      <div class="row" v-if="mostrarForm">
-        <div class="col-4"></div>
-        <div id="login" class="col-4 rounded">
-          <h2><b>Modificar</b></h2>
-          <form @submit.prevent="modificarUsuario">
-            <input
-              type="text"
-              v-model="usuario.email"
-              placeholder="Usuario"
-              class="form-control input-lg"
-            />
-            <br />
-            <input
-              type="password"
-              v-model="usuario.password"
-              placeholder="Contraseña"
-              class="form-control input-lg"
-            />
-            <br />
-            <div class="d-grid">
-              <button type="submit" class="btn btn-dark btn-block mb-3">
-                Modificar
-              </button>
+    <section id="fondoPerfil">
+      <img src="../../public/img/fondoPerfil.jpg" id="fotoFondoPerfil" />
+      <div>
+        <div class="row g-0">
+          <div class="col-4"></div>
+          <div class="col-4 rounded datos">
+            <div class="text-light text-center">
+              <p>{{ this.$store.state.usuario.name }}</p>
+              <p>{{ this.$store.state.usuario.email }}</p>
+              <div class="d-grid">
+                <button @click="AbrirForm" class="btn btn-success btn-block">Editar</button>
+              </div>
+              <br>
             </div>
-          </form>
+            <form @submit.prevent="modificarUsuario" v-if="mostrarForm">
+              <input
+                type="text"
+                v-model="usuario.email"
+                placeholder="Usuario"
+                class="form-control input-lg"
+              />
+              <br />
+              <input
+                type="password"
+                v-model="usuario.password"
+                placeholder="Contraseña"
+                class="form-control input-lg"
+              />
+              <br />
+              <div class="d-grid">
+                <button type="submit" class="btn btn-dark btn-block mb-3">
+                  Modificar
+                </button>
+              </div>
+            </form>
+          </div>
+          <div class="col-4"></div>
         </div>
-        <div class="col-4"></div>
       </div>
-    </div>
+    </section>
   </div>
 </template>
 
 <script>
 import UsuariosService from "@/services/UsuariosService.js";
 export default {
-    created(){
-        let idUsuario = this.$store.state.usuario.id
-        UsuariosService.getUsuarioId(idUsuario).then(
-            data => {
-                this.usuario=data.data;
-                console.log(data);
-            }
-        )
+  created() {
+    let idUsuario = this.$store.state.usuario.id;
+    UsuariosService.getUsuarioId(idUsuario).then((data) => {
+      this.usuario = data.data;
+      console.log(data);
+    });
+  },
+  data() {
+    return {
+      mostrarForm: false,
+      usuario: {
+        id: "",
+        email: "",
+        password: "",
+      },
+    };
+  },
+  methods: {
+    AbrirForm() {
+      this.mostrarForm = !this.mostrarForm;
     },
-    data() {
-        return{
-            mostrarForm:false,
-            usuario: {
-                id: "",
-                email: "",
-                password: "",
-            }
-        }
-    },
-    methods:{
-        AbrirForm(){
-            this.mostrarForm = !this.mostrarForm;
-        },
-        modificarUsuario(){
-            
-        }
-    }
+    modificarUsuario() {},
+  },
 };
 </script>
 
 <style>
+#fotoFondoPerfil {
+  opacity: 0.5;
+  position: absolute;
+  object-fit: cover;
+  height: 650px;
+  width: 100%;
+  z-index: 1 !important;
+}
+#fondoPerfil {
+  background-color: #000;
+  height: 650px;
+}
+.datos {
+  z-index: 10 !important;
+}
 </style>

@@ -1,4 +1,5 @@
-import axios from 'axios'
+const axios = require('axios');
+const token = require('./token');
 
 const apiClient = axios.create({
   baseURL: `http://localhost:4444`, //Hay que poner 4444 para la api
@@ -26,7 +27,7 @@ export default {
     return apiClient.delete('/eliminarUsuario/' + id)
   },
   putUsuario(usuario) {
-      console.log(usuario)
-      return apiClient.put('/modificarUsuario/' + usuario._id , usuario)
+    let tokenUsuario = token.decodeToken(usuario)
+    return apiClient.put('/modificarUsuario/' + usuario._id , tokenUsuario)
   },
 }

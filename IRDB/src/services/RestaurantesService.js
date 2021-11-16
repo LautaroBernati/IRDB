@@ -1,4 +1,5 @@
-import axios from 'axios'
+const axios = require('axios');
+const tokenService = require('./token');
 
 const apiClient = axios.create({
   baseURL: `http://localhost:4444`,
@@ -17,12 +18,14 @@ export default {
     return apiClient.get('/restaurantes/' + id)
   },
   postRestaurante(restaurante) {
-    return apiClient.post('/altaRestaurante/', restaurante)
+    let token = tokenService.createRestoToken(restaurante)
+    return apiClient.post('/altaRestaurante/', token)
   },
   deleteRestaurante(id) {
     return apiClient.delete('/eliminarRestaurante/' + id)
   },
   putRestaurante(restaurante) {
-      return apiClient.put('/modificarRestaurante/' + restaurante._id , restaurante)
-  },
+    let token = tokenService.createRestoToken(restaurante)
+    return apiClient.put('/modificarRestaurante/', token)
+  }
 }

@@ -65,7 +65,6 @@ app.post('/login', function (req, res) {
             res.status(404).send(err.message); // enviar error
         });
 });
-
 app.post('/register', function (req, res) {  //register  ------------------CAMBIÉ LA RUTA DE ACA, ANTERIOR: /usuarios. atte: Lautaro
     bcrypt.genSalt(10, function (err, salt) {
         bcrypt.hash(req.body.password, salt).then(hash => {
@@ -166,8 +165,6 @@ app.delete('/eliminarRestaurante', aut.isAuth, function (req, res) { // deleteRe
 
 app.put('/modificarRestaurante', aut.isAuth, function (req, res) { //juan
     service.decodeRestoToken(req.body.token).then(decoded => {
-        console.log("a esta altyura decodifico ok");
-        console.log(decoded);
         Restaurant.findOneAndUpdate({ _id: decoded.id }, decoded)
         .then(data => {
             console.log(data)
