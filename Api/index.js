@@ -19,7 +19,7 @@ app.use(async function (req, res, next) {
     try {
         await mongoose.connect(DSN, {
             serverSelectionTimeoutMS: 3000
-        }); // async //ORM: Object Relational Mapper 
+        }); 
 
         mongoose.connection.on('error', err => {
             console.log(err);
@@ -27,7 +27,6 @@ app.use(async function (req, res, next) {
         });
 
         mongoose.connection.on('open', err => {
-            //next()
         });
         next();
 

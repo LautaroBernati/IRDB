@@ -23,7 +23,6 @@ function decodeToken(token) { //El decoder devuelve una PROMESA
         try {
             const payload = jwt.decode(token, config.SECRET_TOKEN);
             let usuario = {
-                //id: payload.sub,
                 name: payload.name,
                 email: payload.email,
                 password: payload.password,
@@ -56,7 +55,7 @@ function decodeRestoToken(restoToken) {
                 Rtype: payload.Rtype
             } 
             resolve(resto);
-        } catch (err) { //si el token no se puede validar, tira exception
+        } catch (err) { 
             reject({
                 status: 500,
                 message: 'Invalid token'

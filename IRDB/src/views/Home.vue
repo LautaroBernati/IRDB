@@ -12,7 +12,6 @@
       Si no encontras tu restaurante, no te preocupes! Podes agregarlo haciendo <router-link to="/agregarResto" class="text-light">click acá</router-link>
       <br>
     </p>
-    <!--{{login}}-->
   </div>
   
 </template>
@@ -20,11 +19,6 @@
 <script>
 export default {
   name: 'Home',
-  data() {
-    return {
-      //login: this.$store.state.usuario.usuario.email,
-    }
-  }
 }
 </script>
 <style>

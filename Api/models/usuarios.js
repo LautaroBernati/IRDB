@@ -19,11 +19,4 @@ const Usuario = new Schema({
     collection: 'Usuarios'
 });
 
-/* mongoose.connection.on('error',err => { 
-
-        console.log(err)
-
-});
- */
-
 module.exports = mongoose.model('Usuario', Usuario); // genera un modelo internamente y toda la definicion de este modelo.

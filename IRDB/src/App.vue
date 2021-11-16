@@ -37,8 +37,6 @@
 </template>
 
 <script>
-
- //v-if="!islogin"
 import { defineComponent } from "vue";
 import { mapGetters } from "vuex";
 

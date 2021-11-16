@@ -43,7 +43,6 @@ function getRestaurantId(req, res) {
                     message: 'restaurant inexistente'
                 });
             }
-            //return res.send({ token: service.createToken(data) }); LO CAMBIE - CAMI
             return res.send({ data });
         })
         .catch(err => {

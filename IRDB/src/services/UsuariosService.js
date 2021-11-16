@@ -2,7 +2,7 @@ const axios = require('axios');
 const tokenService = require('./token');
 
 const apiClient = axios.create({
-  baseURL: `http://localhost:4444`, //Hay que poner 4444 para la api
+  baseURL: `http://localhost:4444`, 
   headers: {
     Accept: 'application/json',
     'Content-Type': 'application/json',
