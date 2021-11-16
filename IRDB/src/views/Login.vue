@@ -41,15 +41,15 @@ export default {
   data() {
     return {
       usuario: {
-        email: "admin@admin",
-        password: "1234",
+        email: "",
+        password: "",
       },
     };
   },
   methods: {
     async login() {
-      let tokenUsuario = UsuariosService.login(this.usuario)
-      await this.$store.dispatch("login", { usuario: tokenUsuario });
+      let tokenUsuario = await UsuariosService.login(this.usuario)
+      this.$store.dispatch("login", { usuario: tokenUsuario });
       this.$router.push({ name: "Home" });
     },
   },

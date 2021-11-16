@@ -57,9 +57,9 @@ export default {
   data() {
     return {
       usuario: {
-        name: "juan",
-        email: "juan@admin",
-        password: "1234",
+        name: "",
+        email: "",
+        password: "",
         esAdmin:false
       },
     };

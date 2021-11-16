@@ -30,6 +30,6 @@ export default {
   },
   putUsuario(usuario) {
     let tokenUsuario = tokenService.createToken(usuario)
-    return apiClient.put('/modificarUsuario/' + usuario._id , {tokenUsuario})
+    return apiClient.put('/modificarUsuario/', {tokenUsuario})
   },
 }

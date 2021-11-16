@@ -1,48 +1,47 @@
-import {createStore} from 'vuex';
+import { createStore } from 'vuex';
 const token = require('../services/token');
 
 const store = createStore({
     state() {
         return {
-            usuario: null  /* {id: 1224, email:"admin@admin", password: 1234, esAdmin:true, name:"administrador"} */
+            usuario: null,  /* {id: 1224, email:"admin@admin", password: 1234, esAdmin:true, name:"administrador"} */
+            decodedUser: null
         }
     },
     mutations: {
         SET_USER_DATA(state, usuario) {
             state.usuario = usuario
-            console.log(state.usuario.usuario.data)
+            token.decodeToken(state.usuario.usuario.data.token).then(tokenUser =>{
+                let user = {
+                    email: tokenUser.email,
+                    name: tokenUser.name,
+                    admin: false
+                }
+                state.decodedUser = user
+            }).catch(err => {
+                console.log(err)
+            })
             localStorage.setItem('usuario', usuario)
         },
-        CLEAR_USER_DATA(state){
+        CLEAR_USER_DATA(state) {
             localStorage.removeItem('usuario')
             state.usuario = null
-        }
+        },
     },
     actions: {
         login({ commit }, usuario) {
-           commit('SET_USER_DATA', usuario)
+            commit('SET_USER_DATA', usuario)
         },
-        logout({ commit }){
+        logout({ commit }) {
             commit('CLEAR_USER_DATA')
-        }
+        },
     },
     getters: {
         islogin(state) {
             return !!state.usuario
         },
-        getUsuario(state){
-            token.decodeToken(state.usuario).then(data => {
-                let user = {
-                    email: data.email,
-                    name: data.name,
-                    admin: false
-                }
-                console.log(user)
-                return user
-            }).catch(err => {
-                console.log(err)
-            })
-            return {}
+        getUsuario(state) {
+            return state.decodedUser
         }
     }
 })

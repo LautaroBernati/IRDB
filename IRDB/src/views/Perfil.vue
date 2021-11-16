@@ -44,16 +44,9 @@
 </template>
 
 <script>
-/* import UsuariosService from "@/services/UsuariosService.js"; */
 import { mapGetters } from 'vuex'
+import UsuariosService from "@/services/UsuariosService.js";
 export default {
-/*   created() {
-    let idUsuario = this.$store.state.usuario.id;
-    UsuariosService.getUsuarioId(idUsuario).then((data) => {
-      this.usuario = data.data;
-      console.log(data);
-    });
-  }, */
   data() {
     return {
       mostrarForm: false,
@@ -62,13 +55,16 @@ export default {
         email: "",
         password: "",
       },
+
     };
   },
   methods: {
     AbrirForm() {
       this.mostrarForm = !this.mostrarForm;
     },
-    modificarUsuario() {},
+    async modificarUsuario() {
+      await UsuariosService.putUsuario(this.usuario)
+    },
   },
   computed: {
     ...mapGetters(['getUsuario'])

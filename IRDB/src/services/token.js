@@ -56,7 +56,19 @@ function createRestoToken(resto){
     }
     return jwt.encode(payload, config.SECRET_TOKEN)
 }
-
+function validToken(token) { //este método se fija si la req TIENE un token o no, y si es valido
+    decodeToken(token)
+        .then(decoded => {
+            if(decoded.exp<=moment().unix() || decoded.exp === undefined){ //chequea si el token tiene expiracion, y si es asi, si ya expiro.
+                return false
+            }
+            return true
+        })
+        .catch(err => {
+            console.log(err)
+            return false;
+        })
+}
 module.exports= {
-    createToken, decodeToken, createRestoToken
+    createToken, decodeToken, createRestoToken, validToken
 }
