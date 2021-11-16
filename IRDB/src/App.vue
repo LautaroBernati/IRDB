@@ -27,7 +27,7 @@
           <router-link to="/Perfil" class="nav-link text-light" v-if="islogin">Perfil</router-link>
       </span>
       <span class="nav-item justify-content-md-end">
-        <button class="nav-link text-light" @submit.prevent="logout" id="logout" v-if="islogin">Logout</button>
+        <button class="nav-link text-light" @click="logout" id="logout" v-if="islogin">Logout</button>
       </span>
     </div>
     <div id="linea"></div>
@@ -60,6 +60,7 @@ export default defineComponent({
       
       await this.$store.dispatch("logout");
       this.$router.push({ name: "Home" });
+
     },
 
 

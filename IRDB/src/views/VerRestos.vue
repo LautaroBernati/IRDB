@@ -34,7 +34,7 @@
                 <td>
                   <button
                     v-if="esAdmin()"
-                    @click="borrarResto(resto.address, index)"
+                    @click="borrarResto(resto.address,index)"
                     class="btn btn-secondary"
                   >
                     Eliminar
@@ -98,7 +98,7 @@ export default {
       return 0;
     },
     esAdmin() {
-      return this.$store.state.usuario.esAdmin;
+      return this.$store.state.decodedUser.admin;
     },
     async borrarResto(address, indexResto) {
       await RestaurantesService.deleteRestaurante(address);

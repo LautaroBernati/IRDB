@@ -11,12 +11,24 @@ const store = createStore({
     mutations: {
         SET_USER_DATA(state, usuario) {
             state.usuario = usuario
-            token.decodeToken(state.usuario.usuario.data.token).then(tokenUser =>{
+            token.decodeToken(state.usuario.usuario.data.token).then(tokenUser => {
+
+                let emailAdmin = tokenUser.email.split('@')[1]
+
+                let esAdmin = false;
+
+                if (emailAdmin === 'irdb.com') {
+
+                    esAdmin = true;
+
+                }
+
                 let user = {
                     email: tokenUser.email,
                     name: tokenUser.name,
-                    admin: false
+                    admin: esAdmin
                 }
+
                 state.decodedUser = user
             }).catch(err => {
                 console.log(err)
@@ -26,6 +38,7 @@ const store = createStore({
         CLEAR_USER_DATA(state) {
             localStorage.removeItem('usuario')
             state.usuario = null
+            state.decodedUser = null
         },
     },
     actions: {

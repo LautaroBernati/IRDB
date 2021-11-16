@@ -5,7 +5,7 @@ function addRestaurant(req, res) {
     service.decodeRestoToken(req.body.token).then(decoded => {
         Restaurant.findOne({ address: decoded.address })
         .then(data => {
-            if (data === null || data == []) {
+            if (data === null || data == []) {  
                 let nuevoResto = new Restaurant({
                     name: decoded.name,
                     address: decoded.address,
@@ -81,6 +81,7 @@ function updateRestaurant(req, res) {
 }
 
 function deleteRestaurant(req, res) {
+  
     service.decodeRestoToken(req.body.token).then(decoded => {
         Restaurant.findOneAndDelete({ address: decoded.address }).then(data => {
             if (data != null) {

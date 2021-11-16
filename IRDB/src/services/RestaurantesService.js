@@ -1,12 +1,15 @@
 const axios = require('axios');
 const tokenService = require('./token');
+//const store = require('../store/store');
 
 const apiClient = axios.create({
   baseURL: `http://localhost:4444`,
   headers: {
     Accept: 'application/json',
     'Content-Type': 'application/json',
-    Authorization: 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2MThkZTdhOTZkNmRiNzZlYTBhYWJlNWUiLCJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQGFkbWluIiwiaWF0IjoxNjM3MDMwMjY1LCJleHAiOjE2Mzc2MzUwNjV9.FB337LFgCE3lKGycpiZ7WNvH-WxUNeoMFiwAQSJJ050',
+    Authorization: /* `Bearer ${store.state.usuario}` */ 
+    
+     'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2MThkZTdhOTZkNmRiNzZlYTBhYWJlNWUiLCJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQGFkbWluIiwiaWF0IjoxNjM3MDMwMjY1LCJleHAiOjE2Mzc2MzUwNjV9.FB337LFgCE3lKGycpiZ7WNvH-WxUNeoMFiwAQSJJ050',
   }
 })
 
@@ -26,7 +29,9 @@ export default {
       address: addressParam,
     }
     let token = tokenService.createRestoToken(resto)
-    return apiClient.delete('/eliminarRestaurante/', {token})
+    console.log(token)
+    return apiClient.delete('/eliminarRestaurante/', 
+    { data: { token: token}})
   },
   putRestaurante(restaurante) {
     let token = tokenService.createRestoToken(restaurante)

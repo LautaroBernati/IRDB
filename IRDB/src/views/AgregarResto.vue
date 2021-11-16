@@ -10,7 +10,7 @@
             <br>
             <input v-model="restaurante.address" type="text" name="address" placeholder="Dirección" class="form-control input-lg"/>
             <br>
-            <input v-model="restaurante.tipo" type="text" name="tipo" placeholder="Tipo de comida" class="form-control input-lg"/>
+            <input v-model="restaurante.Rtype" type="text" name="tipo" placeholder="Tipo de comida" class="form-control input-lg"/>
             <br>
             <div class="d-grid">
               <button type="submit" name="button" class="btn btn-dark btn-block mb-3">Agregar</button>
@@ -33,12 +33,11 @@ export default {
       restaurante: {
         name: "",
         address: "",
-        puntos: 0,
-        tipo: "",
-        foto: "",
-        platos: [],
-        listaVotantes: [],
-        comentarios: [],
+        points: 0,
+        Rtype: "",
+        dishes: [],
+        votersList: [],
+        comments: [],
       },
     };
   },

@@ -134,14 +134,14 @@ export default {
   },
   computed: {
     puedeVotar() {
-      let idUsuario = this.$store.state.usuario.id;
+      let mailUsuario = this.$store.state.decodedUser.email;
       let lista = this.resto.votersList;
 
       console.log(lista);
 
       try {
         if (lista.length > 0) {
-          let voto = lista.find((id) => id === idUsuario);
+          let voto = lista.find((mail) => mail === mailUsuario);
 
           if (voto != undefined) {
             return false;
@@ -169,7 +169,7 @@ export default {
       this.inputPlato = !this.inputPlato;
     },
     esAdmin() {
-      return this.$store.state.usuario.esAdmin;
+      return this.$store.state.decodedUser.admin;
     },
     async agregarModifPlato() {
       if (this.indicePlato === -1) {
@@ -193,8 +193,8 @@ export default {
       await RestaurantesService.putRestaurante(this.resto);
     },
     async calificar() {
-      let idUsuario = this.$store.state.usuario.id;
-      this.resto.votersList.push(idUsuario);
+      let mailUsuario = this.$store.state.decodedUser.email;
+      this.resto.votersList.push(mailUsuario);
       this.resto.points += Number(this.calificacion);
       await RestaurantesService.putRestaurante(this.resto);
     },
@@ -202,7 +202,7 @@ export default {
       if (this.indiceComentario === -1) {
         this.resto.comments.push({
           content: this.comentarioModel,
-          user: this.$store.state.usuario.email,
+          user: this.$store.state.decodedUser.email,
         });
       } else {
         this.resto.comments[this.indiceComentario].content =

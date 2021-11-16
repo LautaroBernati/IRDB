@@ -17,15 +17,8 @@
             <form @submit.prevent="modificarUsuario" v-if="mostrarForm">
               <input
                 type="text"
-                v-model="usuario.email"
+                v-model="usuario.name"
                 placeholder="Usuario"
-                class="form-control input-lg"
-              />
-              <br />
-              <input
-                type="password"
-                v-model="usuario.password"
-                placeholder="Contraseña"
                 class="form-control input-lg"
               />
               <br />
@@ -51,9 +44,8 @@ export default {
     return {
       mostrarForm: false,
       usuario: {
-        id: "",
-        email: "",
-        password: "",
+        name: '',
+        email: '',
       },
 
     };
@@ -63,7 +55,9 @@ export default {
       this.mostrarForm = !this.mostrarForm;
     },
     async modificarUsuario() {
-      await UsuariosService.putUsuario(this.usuario)
+      this.usuario.email = this.getUsuario.email; 
+      await UsuariosService.putUsuario(this.usuario); 
+      this.usuario.name = this.$store.state.decodedUser.name;
     },
   },
   computed: {
