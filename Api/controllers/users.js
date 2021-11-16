@@ -34,7 +34,6 @@ function getUsuariosId(req, res) {  //endpoint, ruta. Siempre solo una respuesta
 
 function loginUsuario(req, res) {
     Usuario.findOne({ email: req.body.email }).exec().then(data => {
-        //deberia haber un if que valide los datos que le llegan del user
         if (bcrypt.compareSync(req.body.password, data.password)) { //compara la pass hasheada de la req contra la bd
             res.status(200).send({ token: service.createToken(data) }); //si esta ok, retorna un token
         } else {

@@ -64,11 +64,8 @@ function getRestaurantes(req, res) {  //endpoint, ruta. Siempre solo una respues
 
 function updateRestaurant(req, res) {
     service.decodeRestoToken(req.body.token).then(decoded => {
-        //console.log("a esta altyura decodifico ok");
-        //console.log(decoded);
         Restaurant.findOneAndUpdate({ address: decoded.address }, decoded)
             .then(data => {
-                console.log(data)
                 if (data != null) {
                     res.status(200).send({ message: 'Restaurante actualizado con exito' })
                 } else {
@@ -86,7 +83,6 @@ function updateRestaurant(req, res) {
 
 function deleteRestaurant(req, res) {
     service.decodeRestoToken(req.body.token).then(decoded => {
-        console.log(decoded);
         Restaurant.findOneAndDelete({ address: decoded.address }).then(data => {
             if (data != null) {
                 res.status(200).send({ message: 'Restaurant borrado con exito' })

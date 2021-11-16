@@ -1,17 +1,17 @@
 const axios = require('axios');
-const token = require('./token');
+const tokenService = require('./token');
 
 const apiClient = axios.create({
   baseURL: `http://localhost:4444`, //Hay que poner 4444 para la api
   headers: {
     Accept: 'application/json',
     'Content-Type': 'application/json',
-    Authorization: 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2MTkxM2UzMTU2MWRmMGIxY2Y3M2E0MWMiLCJuYW1lIjoiQ2FtaWxhIiwiZW1haWwiOiJjYW1pQGFkbWluIiwiaWF0IjpudWxsLCJleHAiOjE2MzgxMTk2MzN9.xsxg6wtCm9X0RBta5wBhYlSrTlTCAv6z_pRh2UtRUPU',
+    Authorization: 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2MThkZTdhOTZkNmRiNzZlYTBhYWJlNWUiLCJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQGFkbWluIiwiaWF0IjoxNjM3MDMwMjY1LCJleHAiOjE2Mzc2MzUwNjV9.FB337LFgCE3lKGycpiZ7WNvH-WxUNeoMFiwAQSJJ050',
   }
 })
 
 export default {
-  logUserByEmailAndPassword(usuario) {
+  login(usuario) {
     return apiClient.post('/login', usuario)
   },
   getUsuarioId(id) {
@@ -21,13 +21,15 @@ export default {
     return apiClient.get('/usuarios')
   },
   postUsuario(usuario) {
-    return apiClient.post('/register/', usuario)
+    let token = tokenService.createToken(usuario)
+    return apiClient.post('/register/', {token})
   },
-  deleteUsuario(id) {
-    return apiClient.delete('/eliminarUsuario/' + id)
+  deleteUsuario(usuario) {
+    let token = tokenService.createToken(usuario)
+    return apiClient.delete('/eliminarUsuario/', {token})
   },
   putUsuario(usuario) {
-    let tokenUsuario = token.decodeToken(usuario)
-    return apiClient.put('/modificarUsuario/' + usuario._id , tokenUsuario)
+    let tokenUsuario = tokenService.createToken(usuario)
+    return apiClient.put('/modificarUsuario/' + usuario._id , {tokenUsuario})
   },
 }

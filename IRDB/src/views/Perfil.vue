@@ -7,8 +7,8 @@
           <div class="col-4"></div>
           <div class="col-4 rounded datos">
             <div class="text-light text-center">
-              <p>{{ this.$store.state.usuario.name }}</p>
-              <p>{{ this.$store.state.usuario.email }}</p>
+              <p>{{ getUsuario.name }}</p>
+              <p>{{ getUsuario.email }}</p>
               <div class="d-grid">
                 <button @click="AbrirForm" class="btn btn-success btn-block">Editar</button>
               </div>
@@ -44,15 +44,16 @@
 </template>
 
 <script>
-import UsuariosService from "@/services/UsuariosService.js";
+/* import UsuariosService from "@/services/UsuariosService.js"; */
+import { mapGetters } from 'vuex'
 export default {
-  created() {
+/*   created() {
     let idUsuario = this.$store.state.usuario.id;
     UsuariosService.getUsuarioId(idUsuario).then((data) => {
       this.usuario = data.data;
       console.log(data);
     });
-  },
+  }, */
   data() {
     return {
       mostrarForm: false,
@@ -69,6 +70,9 @@ export default {
     },
     modificarUsuario() {},
   },
+  computed: {
+    ...mapGetters(['getUsuario'])
+  }
 };
 </script>
 

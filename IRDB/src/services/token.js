@@ -12,7 +12,7 @@ function createToken(user) {
         //posible solución: hacer que la base busque por email (y por address en el caso de los restos) en vex de x id
         name: user.name,
         email: user.email,
-        psw: user.password,
+        password: user.password,
         iat: moment().unix(),
         exp: moment().add(7, 'days').unix(),
     };
@@ -25,7 +25,7 @@ function decodeToken(token) {
         try {
             const payload = jwt.decode(token, config.SECRET_TOKEN);
             let usuario = {
-                id: payload.sub,
+                _id: payload.sub,
                 name: payload.name,
                 email: payload.email,
                 iat: payload.iat,
@@ -44,7 +44,6 @@ function decodeToken(token) {
 }
 function createRestoToken(resto){
     const payload = {
-        sub: resto._id,
         name: resto.name,
         address: resto.address,
         Rtype: resto.Rtype,

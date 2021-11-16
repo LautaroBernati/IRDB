@@ -15,19 +15,19 @@
           <li class="nav-item" >
             <router-link to="/agregarResto" class="nav-link" v-if="islogin">Agregar Restaurante</router-link>
           </li>
-          <li class="nav-item">
+<!--           <li class="nav-item">
             <router-link to="/usuarios" class="nav-link" v-if="islogin">Usuarios</router-link>
-          </li>
+          </li> -->
           <li class="nav-item" >
             <router-link to="/verRestos" class="nav-link" v-if="islogin">Ver Restaurantes</router-link>
           </li>
         </ul>
       </div>
       <span class="nav-item justify-content-md-end">
-          <router-link to="/Perfil" class="nav-link text-light">Perfil</router-link>
+          <router-link to="/Perfil" class="nav-link text-light" v-if="islogin">Perfil</router-link>
       </span>
       <span class="nav-item justify-content-md-end">
-        <button class="nav-link text-light" @submit.prevent="logout" id="logout" >Logout</button>
+        <button class="nav-link text-light" @submit.prevent="logout" id="logout" v-if="islogin">Logout</button>
       </span>
     </div>
     <div id="linea"></div>

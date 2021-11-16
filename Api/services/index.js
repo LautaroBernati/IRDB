@@ -47,7 +47,6 @@ function decodeRestoToken(restoToken) {
         try {
             const payload = jwt.decode(restoToken, config.SECRET_TOKEN);
             let resto = {
-                //id: payload.sub,
                 name: payload.name,
                 address: payload.address,
                 comments: payload.comments,
@@ -55,7 +54,7 @@ function decodeRestoToken(restoToken) {
                 points: payload.points,
                 votersList: payload.votersList,
                 Rtype: payload.Rtype
-            }
+            } 
             resolve(resto);
         } catch (err) { //si el token no se puede validar, tira exception
             reject({
