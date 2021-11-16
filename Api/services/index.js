@@ -23,9 +23,10 @@ function decodeToken(token) { //El decoder devuelve una PROMESA
         try {
             const payload = jwt.decode(token, config.SECRET_TOKEN);
             let usuario = {
-                id: payload.sub,
+                //id: payload.sub,
                 name: payload.name,
                 email: payload.email,
+                password: payload.password,
                 iat: payload.iat,
                 exp: payload.exp
             }
@@ -46,7 +47,7 @@ function decodeRestoToken(restoToken) {
         try {
             const payload = jwt.decode(restoToken, config.SECRET_TOKEN);
             let resto = {
-                id: payload.sub,
+                //id: payload.sub,
                 name: payload.name,
                 address: payload.address,
                 comments: payload.comments,
