@@ -32,23 +32,9 @@ function getUsuariosId(req, res) {  //endpoint, ruta. Siempre solo una respuesta
         });
 }
 
-function loginUsuario(req, res) {
-    Usuario.findOne({ email: req.body.email }).exec().then(data => {
-        if (bcrypt.compareSync(req.body.password, data.password)) { //compara la pass hasheada de la req contra la bd
-            res.status(200).send({ token: service.createToken(data) }); //si esta ok, retorna un token
-        } else {
-            res.status(200).send({ message: 'usuario no encontrado' });
-        };
-    })
-        .catch(err => {
-            console.log(err);
-            res.status(404).send(err.message); // enviar error
-        });
-}
-
-function regisUsuario(req, res) {  
+function regisUsuario(req, res) {
     service.decodeToken(req.body.token).then(decoded => {
-        Usuario.findOne({ email: decoded.email }) 
+        Usuario.findOne({ email: decoded.email })
             .then(data => {
                 if (data == null) {
                     bcrypt.genSalt(10, function (err, salt) {
@@ -82,6 +68,22 @@ function regisUsuario(req, res) {
     });
 }
 
+function loginUsuario(req, res) {
+    Usuario.findOne({ email: req.body.email }).exec().then(data => {
+        if (bcrypt.compareSync(req.body.password, data.password)) { //compara la pass hasheada de la req contra la bd
+            res.status(200).send({ token: service.createToken(data) }); //si esta ok, retorna un token
+        } else {
+            res.status(200).send({ message: 'usuario no encontrado' });
+        };
+    })
+        .catch(err => {
+            console.log(err);
+            res.status(404).send(err.message); // enviar error
+        });
+}
+
+
+
 function updateUsuario(req, res) {
     service.decodeToken(req.body.token).then(decoded => {
         //console.log(JSON.stringify(decoded));
@@ -104,7 +106,7 @@ function updateUsuario(req, res) {
 
 function deleteUsuario(req, res) { //deleteUsuario con token
 
-    service.decodeToken(req.body.token).then(decoded => { //ian
+    service.decodeToken(req.body.token).then(decoded => { 
 
         Usuario.findOneAndDelete({ email: decoded.email }).then(data => {
             if (data != null) {

@@ -4,30 +4,32 @@ const service = require('../services/index');
 function addRestaurant(req, res) {
     service.decodeRestoToken(req.body.token).then(decoded => {
         Restaurant.findOne({ address: decoded.address })
-        .then(data => {
-            if (data === null || data == []) {  
-                let nuevoResto = new Restaurant({
-                    name: decoded.name,
-                    address: decoded.address,
-                    comments: decoded.comments,
-                    dishes: decoded.dishes,
-                    points: decoded.points,
-                    votersList: decoded.votersList,
-                    Rtype: decoded.Rtype
-                });
+            .then(data => {
+                if (data === null || data == []) {
+                    let nuevoResto = new Restaurant({
+                        name: decoded.name,
+                        address: decoded.address,
+                        comments: decoded.comments,
+                        dishes: decoded.dishes,
+                        points: decoded.points,
+                        votersList: decoded.votersList,
+                        Rtype: decoded.Rtype
+                    });
 
-                nuevoResto.save().then(data => {
-                    res.status(201).send({ message: 'Restaurant creado correctamente' });
-                })
-                    .catch(err => {
-                        res.status(500).send(err.message);
+                    nuevoResto.save().then(data => {
+                        res.status(201).send({ message: 'Restaurant creado correctamente' });
+
                     })
-            } else {
-                res.status(200).send({ message: 'Ya existe un restaurant con esa direccion' });
-            }
-        }).catch(err => {
-            res.status(500).send(err.message);
-        });
+                        .catch(err => {
+                            res.status(500).send(err.message);
+                        })
+                } else {
+                    res.status(200).send({ message: 'Ya existe un restaurant con esa direccion' });
+
+                }
+            }).catch(err => {
+                res.status(500).send(err.message);
+            });
 
     })
         .catch(err => {
@@ -81,7 +83,7 @@ function updateRestaurant(req, res) {
 }
 
 function deleteRestaurant(req, res) {
-  
+
     service.decodeRestoToken(req.body.token).then(decoded => {
         Restaurant.findOneAndDelete({ address: decoded.address }).then(data => {
             if (data != null) {

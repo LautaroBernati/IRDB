@@ -14,12 +14,14 @@ FALTA:
 - API (op) ✓
 
 - dejar vacio el input de platos y comentarios (detalleResto)
-- agregar tokens front JUAN
-- Logout y login front  
-- Estilos (op) JUAN
+- agregar tokens front ✓
+- Logout y login front ✓  
+- Estilos (op) 
 - sacar console.log() (op)
 - mirar los comentarios que no explican (en api mas que nada) 
-- revisar sintaxis (alt shift f) IAN
-- modularizar api (op) CAMI
-- los otros put(op) CAMI (vemos)
+- revisar sintaxis (alt shift f) 
+- modularizar api (op) ✓
+
+- hacer alert para usuario cuando no se puede agregar resto con esa direc o con lo de usuario (que no vaya todo por consola)
+
 
