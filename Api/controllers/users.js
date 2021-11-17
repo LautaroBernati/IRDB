@@ -3,9 +3,7 @@ const service = require('../services/index'); //contiene la parte de crear y dec
 const bcrypt = require('bcryptjs');
 
 function getUsuarios(req, res) {  //endpoint, ruta. Siempre solo una respuesta por path.
-    //habria que ver si devolver un jwt o no aca
     Usuario.find().select(["email", "name"]).then(data => {
-        //aca podria haber un jwt de todos los usuarios...
         res.send(data);
 
     })
@@ -15,7 +13,7 @@ function getUsuarios(req, res) {  //endpoint, ruta. Siempre solo una respuesta p
         });
 }
 
-function getUsuariosId(req, res) {  //endpoint, ruta. Siempre solo una respuesta por path. lo mas cercano a lo ideal
+function getUsuariosId(req, res) {  
     Usuario.findById(req.params.id)
         .then(data => {
             if (data === null) {
@@ -70,7 +68,7 @@ function regisUsuario(req, res) {
 
 function loginUsuario(req, res) {
     Usuario.findOne({ email: req.body.email }).exec().then(data => {
-        if (bcrypt.compareSync(req.body.password, data.password)) { //compara la pass hasheada de la req contra la bd
+        if (bcrypt.compareSync(req.body.password, data.password)) { //compara la pass de la req contra la hasehada de la bd
             res.status(200).send({ token: service.createToken(data) }); //si esta ok, retorna un token
         } else {
             res.status(200).send({ message: 'usuario no encontrado' });
@@ -104,7 +102,7 @@ function updateUsuario(req, res) {
     });
 }
 
-function deleteUsuario(req, res) { //deleteUsuario con token
+function deleteUsuario(req, res) { 
 
     service.decodeToken(req.body.token).then(decoded => { 
 
