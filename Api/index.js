@@ -11,8 +11,6 @@ const UsersCtrl = require('./controllers/users');
 
 app.use(cors());
 
-/* app.use(express.static('public')); */ // middleware
-
 app.use(express.json())
 
 app.use(async function (req, res, next) {
@@ -26,8 +24,6 @@ app.use(async function (req, res, next) {
             res.status(500).end();
         });
 
-        /* mongoose.connection.on('open', err => {
-        }); */
         next();
 
     } catch (err) {

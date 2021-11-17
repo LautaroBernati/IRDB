@@ -15,8 +15,8 @@ const apiClient = axios.create({
 
 export default {
   getRestaurante() {
-    console.log(store.default.getters.getToken.usuario.data.token)
-    console.log(store.default._state.data.usuario.usuario.data.token)
+    //console.log(store.default.getters.getToken.usuario.data.token)
+    //console.log(store.default._state.data.usuario.usuario.data.token)
     
     return apiClient.get('/restaurantes')
   },
