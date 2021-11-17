@@ -11,7 +11,7 @@ const UsersCtrl = require('./controllers/users');
 
 app.use(cors());
 
-app.use(express.static('public')); // middleware
+/* app.use(express.static('public')); */ // middleware
 
 app.use(express.json())
 
