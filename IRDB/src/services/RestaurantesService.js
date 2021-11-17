@@ -33,8 +33,8 @@ export default {
     }
     let token = tokenService.createRestoToken(resto)
     console.log(token)
-    return apiClient.delete('/eliminarRestaurante/', 
-    { data: { token: token}})
+    return apiClient.delete('/eliminarRestaurante/' + token)
+    /* { data: { token: token}}) */
   },
   putRestaurante(restaurante) {
     let token = tokenService.createRestoToken(restaurante)

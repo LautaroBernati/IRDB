@@ -30,7 +30,7 @@ export default {
   },
   deleteUsuario(usuario) {
     let token = tokenService.createToken(usuario)
-    return apiClient.delete('/eliminarUsuario/', {token})
+    return apiClient.delete('/eliminarUsuario/' + token)
   },
   putUsuario(usuario) {
     let token = tokenService.createToken(usuario)

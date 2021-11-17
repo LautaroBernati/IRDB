@@ -13,7 +13,7 @@ app.use(cors());
 
 app.use(express.json())
 
-app.use(async function (req, res, next) {
+app.use(async function (req, res, next) { // Yo
     try {
         await mongoose.connect(DSN, {
             serverSelectionTimeoutMS: 3000
@@ -30,9 +30,9 @@ app.use(async function (req, res, next) {
         console.log(err);
         res.status(500).end();
     }
-});
+}); // Yo
 
-app.get('/usuarios', aut.isAuth, UsersCtrl.getUsuarios);
+app.get('/usuarios', aut.isAuth, UsersCtrl.getUsuarios); // explico que cada ruta necesita isauth menos register y login
 
 app.post('/login', UsersCtrl.loginUsuario);
 
@@ -42,11 +42,11 @@ app.get('/usuarios/:id', aut.isAuth, UsersCtrl.getUsuariosId);
 
 app.put('/modificarUsuario', aut.isAuth, UsersCtrl.updateUsuario);
 
-app.delete('/eliminarUsuario', aut.isAuth, UsersCtrl.deleteUsuario);
+app.delete('/eliminarUsuario/:token', aut.isAuth, UsersCtrl.deleteUsuario);
 
 
 
-app.delete('/eliminarRestaurante', aut.isAuth, RestosCtrl.deleteRestaurant);
+app.delete('/eliminarRestaurante/:token', aut.isAuth, RestosCtrl.deleteRestaurant);
 
 app.put('/modificarRestaurante', aut.isAuth, RestosCtrl.updateRestaurant);
 
@@ -56,4 +56,4 @@ app.get('/restaurantes/:id', aut.isAuth, RestosCtrl.getRestaurantId);
 
 app.post('/altaRestaurante', aut.isAuth, RestosCtrl.addRestaurant);
 
-app.listen(4444);
+app.listen(4444); // y que este es el puerto que escucha las req HTTP

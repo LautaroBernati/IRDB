@@ -103,9 +103,7 @@ function updateUsuario(req, res) {
 }
 
 function deleteUsuario(req, res) { 
-
-    service.decodeToken(req.body.token).then(decoded => { 
-
+    service.decodeToken(req.params.token).then(decoded => { 
         Usuario.findOneAndDelete({ email: decoded.email }).then(data => {
             if (data != null) {
                 res.status(200).send({ message: 'Usuario borrado con exito' })
