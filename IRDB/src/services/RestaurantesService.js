@@ -1,6 +1,6 @@
 const axios = require('axios');
 const tokenService = require('./token');
-const store = require('../store/store');
+//const store = require('../store/store');
 
 const apiClient = axios.create({
   baseURL: `http://localhost:4444`,

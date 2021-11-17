@@ -84,7 +84,6 @@ function updateRestaurant(req, res) {
 }
 
 function deleteRestaurant(req, res) {
-    console.log(req.params.token);
     service.decodeRestoToken(req.params.token).then(decoded => {
         Restaurant.findOneAndDelete({ address: decoded.address }).then(data => {
             if (data != null) {
