@@ -55,6 +55,9 @@ const store = createStore({
         },
         getUsuario(state) {
             return state.decodedUser
+        },
+        getToken(state) {
+            return state.usuario
         }
     }
 })

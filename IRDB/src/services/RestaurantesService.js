@@ -7,15 +7,17 @@ const apiClient = axios.create({
   headers: {
     Accept: 'application/json',
     'Content-Type': 'application/json',
-    Authorization: `Bearer ${store.default._state.data.usuario.usuario.data.token}` ,
+    Authorization:/*  `Bearer ${store/* .default._state.usuario.usuario.data.token} `*/ 
     
-     /* 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2MThkZTdhOTZkNmRiNzZlYTBhYWJlNWUiLCJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQGFkbWluIiwiaWF0IjoxNjM3MDMwMjY1LCJleHAiOjE2Mzc2MzUwNjV9.FB337LFgCE3lKGycpiZ7WNvH-WxUNeoMFiwAQSJJ050', */
+     'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2MThkZTdhOTZkNmRiNzZlYTBhYWJlNWUiLCJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQGFkbWluIiwiaWF0IjoxNjM3MDMwMjY1LCJleHAiOjE2Mzc2MzUwNjV9.FB337LFgCE3lKGycpiZ7WNvH-WxUNeoMFiwAQSJJ050',
   }
 })
 
 export default {
   getRestaurante() {
-    console.log(store.default._state.data.usuario)
+    console.log(store.default.getters.getToken.usuario.data.token)
+    console.log(store.default._state.data.usuario.usuario.data.token)
+    
     return apiClient.get('/restaurantes')
   },
   getRestauranteId(id) {
@@ -37,5 +39,6 @@ export default {
   putRestaurante(restaurante) {
     let token = tokenService.createRestoToken(restaurante)
     return apiClient.put('/modificarRestaurante/', {token})
-  }
+  }, 
+
 }
