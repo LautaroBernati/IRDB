@@ -57,7 +57,9 @@ export default {
     async modificarUsuario() {
       this.usuario.email = this.getUsuario.email; 
       await UsuariosService.putUsuario(this.usuario); 
-      this.usuario.name = this.$store.state.decodedUser.name;
+      this.$store.state.decodedUser.name = this.usuario.name;
+      this.usuario.name = "";
+      this.AbrirForm();
     },
   },
   computed: {
