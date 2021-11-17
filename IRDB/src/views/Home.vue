@@ -9,7 +9,7 @@
       <br>
       <router-link to="/register" class="text-light">Registrate</router-link> para poder calificar y comentar sobre tus experiencias en distintos restaurantes que se encuentran en nuestros listados.
       <br>
-      Si no encontras tu restaurante, no te preocupes! Podes agregarlo haciendo <router-link to="/agregarResto" class="text-light">click acá</router-link>
+      Si no encontras tu restaurante, no te preocupes! También podes agregarlo.
       <br>
     </p>
   </div>

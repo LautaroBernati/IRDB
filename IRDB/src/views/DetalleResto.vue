@@ -2,7 +2,7 @@
   <div>
     <div>
       <div class="marginL1">
-        <h1 class="d-inline">{{ resto.name }}&nbsp;</h1> 
+        <h1 class="d-inline">{{ resto.name }}&nbsp;</h1>
         <img src="../../public/img/star.png" id="iconoEstrella" />
         <p class="d-inline">{{ calcularPromedio }} / 10</p>
         <p class="d-inline">({{ resto.votersList.length }} votantes)</p>
@@ -15,11 +15,13 @@
       <div v-if="puedeVotar" class="marginL1">
         <p class="d-inline">1 &nbsp;</p>
         <input v-model="calificacion" type="range" min="1" max="10" />
-        <p class="d-inline"> &nbsp;10</p>
-        <br>
-        <button v-on:click="calificar" class="btn btn-success"> <b>Votar</b></button>
+        <p class="d-inline">&nbsp;10</p>
+        <br />
+        <button v-on:click="calificar" class="btn btn-success">
+          <b>Votar</b>
+        </button>
       </div>
-      <br>
+      <br />
       <div>
         <div class="detallesDiv"></div>
         <div class="fondoNegro">
@@ -74,20 +76,28 @@
         </div>
         <div class="row">
           <div class="col-2"></div>
-          <div class="col-8 ">
+          <div class="col-8">
             <div
               v-for="(c, index) in resto.comments"
               v-bind:key="index"
-              class="lista "
+              class="lista"
             >
-              <div class="card rounded bg-dark text-light" >
+              <div class="card rounded bg-dark text-light">
                 <div class="card-body">
                   <h4 class="card-title">{{ c.user }}</h4>
                   <p class="card-text">{{ c.content }}</p>
-                  <button v-if="esAdmin()" v-on:click="modificarComment(index) " class="btn btn-warning">
+                  <button
+                    v-if="esAdmin()"
+                    v-on:click="modificarComment(index)"
+                    class="btn btn-warning"
+                  >
                     Modificar
                   </button>
-                  <button v-if="esAdmin()" v-on:click="eliminarComment(index)" class="btn btn-danger">
+                  <button
+                    v-if="esAdmin()"
+                    v-on:click="eliminarComment(index)"
+                    class="btn btn-danger"
+                  >
                     Eliminar
                   </button>
                 </div>
@@ -97,8 +107,10 @@
             <br />
             <div>
               <textarea v-model="comentarioModel" cols="70" rows="5"></textarea>
-              <br>
-              <button v-on:click="agregarModifComentario" class="btn btn-dark">Comentar</button>
+              <br />
+              <button v-on:click="agregarModifComentario" class="btn btn-dark">
+                Comentar
+              </button>
             </div>
           </div>
         </div>
@@ -156,9 +168,8 @@ export default {
     calcularPromedio() {
       if (this.resto.votersList.length >= 1) {
         return (
-          Math.round(
-            (this.resto.points / this.resto.votersList.length) * 100
-          ) / 100
+          Math.round((this.resto.points / this.resto.votersList.length) * 100) /
+          100
         );
       }
       return 0;

@@ -4,7 +4,7 @@ const token = require('../services/token');
 const store = createStore({
     state() {
         return {
-            usuario: null,  /* {id: 1224, email:"admin@admin", password: 1234, esAdmin:true, name:"administrador"} */
+            usuario: null,  
             decodedUser: null
         }
     },

@@ -1,4 +1,4 @@
-const express = require('express') // framework (libreria) sirve para crear aplicaciones
+const express = require('express') // (libreria) sirve para crear aplicaciones
 
 const app = express() // instancia de la app
 const mongoose = require('mongoose');
@@ -26,8 +26,8 @@ app.use(async function (req, res, next) {
             res.status(500).end();
         });
 
-        mongoose.connection.on('open', err => {
-        });
+        /* mongoose.connection.on('open', err => {
+        }); */
         next();
 
     } catch (err) {

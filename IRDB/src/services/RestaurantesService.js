@@ -1,20 +1,21 @@
 const axios = require('axios');
 const tokenService = require('./token');
-//const store = require('../store/store');
+const store = require('../store/store');
 
 const apiClient = axios.create({
   baseURL: `http://localhost:4444`,
   headers: {
     Accept: 'application/json',
     'Content-Type': 'application/json',
-    Authorization: /* `Bearer ${store.state.usuario}` */ 
+    Authorization: `Bearer ${store.default._state.data.usuario.usuario.data.token}` ,
     
-     'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2MThkZTdhOTZkNmRiNzZlYTBhYWJlNWUiLCJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQGFkbWluIiwiaWF0IjoxNjM3MDMwMjY1LCJleHAiOjE2Mzc2MzUwNjV9.FB337LFgCE3lKGycpiZ7WNvH-WxUNeoMFiwAQSJJ050',
+     /* 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2MThkZTdhOTZkNmRiNzZlYTBhYWJlNWUiLCJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQGFkbWluIiwiaWF0IjoxNjM3MDMwMjY1LCJleHAiOjE2Mzc2MzUwNjV9.FB337LFgCE3lKGycpiZ7WNvH-WxUNeoMFiwAQSJJ050', */
   }
 })
 
 export default {
   getRestaurante() {
+    console.log(store.default._state.data.usuario)
     return apiClient.get('/restaurantes')
   },
   getRestauranteId(id) {

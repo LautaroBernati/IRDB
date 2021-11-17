@@ -34,7 +34,7 @@
                 <td>
                   <button
                     v-if="esAdmin()"
-                    @click="borrarResto(resto.address,index)"
+                    @click="borrarResto(resto.address, index)"
                     class="btn btn-secondary"
                   >
                     Eliminar
@@ -115,9 +115,9 @@ export default {
       this.modificar = !this.modificar;
     },
     async confirmarModificacion() {
-      this.restoAMod.name = this.modificarModel
+      this.restoAMod.name = this.modificarModel;
       await RestaurantesService.putRestaurante(this.restoAMod);
-      this.verInput()
+      this.verInput();
     },
   },
 };
