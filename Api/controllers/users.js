@@ -22,7 +22,7 @@ function getUsuariosId(req, res) {
                 });
             }
             return res.send({ token: service.createToken(data) });
-            //return res.send({ data });
+            
         })
         .catch(err => {
             console.log(err);

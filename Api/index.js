@@ -32,7 +32,7 @@ app.use(async function (req, res, next) { // Yo
     }
 }); // Yo
 
-app.get('/usuarios', aut.isAuth, UsersCtrl.getUsuarios); // explico que cada ruta necesita isauth menos register y login
+app.get('/usuarios', aut.isAuth, UsersCtrl.getUsuarios); 
 
 app.post('/login', UsersCtrl.loginUsuario);
 
@@ -56,4 +56,4 @@ app.get('/restaurantes/:id', aut.isAuth, RestosCtrl.getRestaurantId);
 
 app.post('/altaRestaurante', aut.isAuth, RestosCtrl.addRestaurant);
 
-app.listen(4444); // y que este es el puerto que escucha las req HTTP
+app.listen(4444); 

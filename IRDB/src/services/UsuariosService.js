@@ -1,8 +1,6 @@
 const axios = require('axios');
 const tokenService = require('./token');
 
-let autorizacion = undefined;
-
 const apiClient = axios.create({
   baseURL: `http://localhost:4444`, 
   headers: {
@@ -15,8 +13,7 @@ const apiClient = axios.create({
 
 export default {
   login(usuario) {
-    autorizacion = apiClient.post('/login', usuario);
-    return autorizacion
+    return apiClient.post('/login', usuario);
   },
   getUsuarioId(id) {
     return apiClient.get('/usuarios/' + id)

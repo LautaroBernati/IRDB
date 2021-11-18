@@ -1,6 +1,5 @@
 const axios = require('axios');
 const tokenService = require('./token');
-//const store = require('../store/store');
 
 const apiClient = axios.create({
   baseURL: `http://localhost:4444`,
@@ -15,9 +14,6 @@ const apiClient = axios.create({
 
 export default {
   getRestaurante() {
-    //console.log(store.default.getters.getToken.usuario.data.token)
-    //console.log(store.default._state.data.usuario.usuario.data.token)
-    
     return apiClient.get('/restaurantes')
   },
   getRestauranteId(id) {
@@ -34,7 +30,6 @@ export default {
     let token = tokenService.createRestoToken(resto)
     console.log(token)
     return apiClient.delete('/eliminarRestaurante/' + token)
-    /* { data: { token: token}}) */
   },
   putRestaurante(restaurante) {
     let token = tokenService.createRestoToken(restaurante)

@@ -38,7 +38,6 @@ function addRestaurant(req, res) {
 }
 
 function getRestaurantId(req, res) {
-    console.log(req.body.token)
     Restaurant.findById(req.params.id)
         .then(data => {
             if (data === null) {

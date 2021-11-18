@@ -35,11 +35,4 @@ const Restaurant = new Schema({
     collection: 'Restaurantes'
 });
 
-/* mongoose.connection.on('error',err => { 
-
-        console.log(err)
-
-});
- */
-
 module.exports = mongoose.model('Restaurantes', Restaurant); // genera un modelo internamente y toda la definicion de este modelo.
