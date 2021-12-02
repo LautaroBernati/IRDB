@@ -1,39 +1,36 @@
 const axios = require('axios');
-const tokenService = require('./token');
+const tokenService = require('./token'); 
+const store = require('../store/store')
 
 const apiClient = axios.create({
   baseURL: `http://localhost:4444`,
   headers: {
     Accept: 'application/json',
     'Content-Type': 'application/json',
-    Authorization:/*  `Bearer ${store/* .default._state.usuario.usuario.data.token} `*/ 
-    
-     'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2MThkZTdhOTZkNmRiNzZlYTBhYWJlNWUiLCJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQGFkbWluIiwiaWF0IjoxNjM3MDMwMjY1LCJleHAiOjE2Mzc2MzUwNjV9.FB337LFgCE3lKGycpiZ7WNvH-WxUNeoMFiwAQSJJ050',
   }
 })
 
 export default {
   getRestaurante() {
-    return apiClient.get('/restaurantes')
+    return apiClient.get('/restaurantes', {headers: {Authorization: `Bearer ${store.default.getters.getToken.usuario.data.token}`}})
   },
   getRestauranteId(id) {
-    return apiClient.get('/restaurantes/' + id)
+    return apiClient.get('/restaurantes/' + id,  {headers: {Authorization: `Bearer ${store.default.getters.getToken.usuario.data.token}`}}) 
   },
   postRestaurante(restaurante) {
     let token = tokenService.createRestoToken(restaurante)
-    return apiClient.post('/altaRestaurante/', {token})
+    return apiClient.post('/altaRestaurante/', {token} ,  {headers: {Authorization: `Bearer ${store.default.getters.getToken.usuario.data.token}`}})
   },
   deleteRestaurante(addressParam) {
     let resto = {
       address: addressParam,
     }
     let token = tokenService.createRestoToken(resto)
-    console.log(token)
-    return apiClient.delete('/eliminarRestaurante/' + token)
+    return apiClient.delete('/eliminarRestaurante/' + token,  {headers: {Authorization: `Bearer ${store.default.getters.getToken.usuario.data.token}`}} )
   },
   putRestaurante(restaurante) {
     let token = tokenService.createRestoToken(restaurante)
-    return apiClient.put('/modificarRestaurante/', {token})
+    return apiClient.put('/modificarRestaurante/', {token},  {headers: {Authorization: `Bearer ${store.default.getters.getToken.usuario.data.token}`}})
   }, 
 
 }

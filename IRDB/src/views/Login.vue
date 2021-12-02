@@ -1,7 +1,7 @@
 <template>
   <div>
     <section id="fondoLogin">
-      <img src="../../public/img/fondoLogin.jpg" id="fotoFondoLogin" >
+      <img src="../../public/img/fondoLogin.jpg" id="fotoFondoLogin" />
       <div class="row g-0">
         <div class="col-4"></div>
         <div id="login" class="col-4 rounded">
@@ -48,9 +48,15 @@ export default {
   },
   methods: {
     async login() {
-      let tokenUsuario = await UsuariosService.login(this.usuario)
-      this.$store.dispatch("login", { usuario: tokenUsuario });
-      this.$router.push({ name: "Home" });
+      try {
+        let tokenUsuario = await UsuariosService.login(this.usuario);
+        this.$store.dispatch("login", { usuario: tokenUsuario });
+        this.$router.push({ name: "Home" });
+      } catch (err) {
+        alert("Usuario incorrecto");
+        this.usuario.email = "";
+        this.usuario.password = "";
+      }
     },
   },
 };
@@ -64,12 +70,12 @@ export default {
   margin-top: 7%;
   z-index: 10;
 }
-#fondoLogin{
+#fondoLogin {
   background-color: #000;
   height: 650px;
 }
-#fotoFondoLogin{
-  position:absolute;
+#fotoFondoLogin {
+  position: absolute;
   opacity: 0.5;
   object-fit: cover;
   height: 650px;

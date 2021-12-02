@@ -13,7 +13,7 @@ function getUsuarios(req, res) {  //endpoint, ruta. Siempre solo una respuesta p
         });
 }
 
-function getUsuariosId(req, res) {  
+function getUsuariosId(req, res) {
     Usuario.findById(req.params.id)
         .then(data => {
             if (data === null) {
@@ -22,7 +22,7 @@ function getUsuariosId(req, res) {
                 });
             }
             return res.send({ token: service.createToken(data) });
-            
+
         })
         .catch(err => {
             console.log(err);
@@ -54,7 +54,7 @@ function regisUsuario(req, res) {
                         });
                     });
                 } else {
-                    res.status(200).send({ message: 'Ya existe un usuario con ese email' })
+                    res.status(409).send({ message: 'Ya existe un usuario con ese email' })
                 }
             }).catch(err => {
                 console.log(err);
@@ -68,15 +68,28 @@ function regisUsuario(req, res) {
 
 function loginUsuario(req, res) {
     Usuario.findOne({ email: req.body.email }).exec().then(data => {
+        console.log(data)
+
+        if (data === null) {
+
+            res.status(404).send({ message: 'usuario no encontrado' });
+
+        }
+
         if (bcrypt.compareSync(req.body.password, data.password)) { //compara la pass de la req contra la hasehada de la bd
+
             res.status(200).send({ token: service.createToken(data) }); //si esta ok, retorna un token
+
         } else {
-            res.status(200).send({ message: 'usuario no encontrado' });
-        };
+
+            res.status(404).send({ message: 'Contraseña incorrecta' });
+
+        }
+
     })
         .catch(err => {
             console.log(err);
-            res.status(404).send(err.message); // enviar error
+            res.status(500).send(err.message); // enviar error
         });
 }
 
@@ -102,8 +115,8 @@ function updateUsuario(req, res) {
     });
 }
 
-function deleteUsuario(req, res) { 
-    service.decodeToken(req.params.token).then(decoded => { 
+function deleteUsuario(req, res) {
+    service.decodeToken(req.params.token).then(decoded => {
         Usuario.findOneAndDelete({ email: decoded.email }).then(data => {
             if (data != null) {
                 res.status(200).send({ message: 'Usuario borrado con exito' })

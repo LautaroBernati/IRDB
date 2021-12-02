@@ -70,6 +70,10 @@ export default {
         await UsuariosService.postUsuario(this.usuario);
         this.$router.push({ name: "Home" });
       } catch (er) {
+        alert("Email existente");
+        this.usuario.name = "";
+        this.usuario.email = "";
+        this.usuario.password = "";
         console.log(er);
       }
     },
