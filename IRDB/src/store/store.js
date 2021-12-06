@@ -1,5 +1,5 @@
 import { createStore } from 'vuex';
-const token = require('../services/token');
+//const token = require('../services/token');
 
 const store = createStore({
     state() {
@@ -10,35 +10,31 @@ const store = createStore({
     },
     mutations: {
         SET_USER_DATA(state, usuario) {
-            state.usuario = usuario
-            token.decodeToken(state.usuario.usuario.data.token).then(tokenUser => {
+            state.usuario = usuario.usuario;
+            
+            let emailAdmin = usuario.decodedUser.email.split('@')[1];
 
-                let emailAdmin = tokenUser.email.split('@')[1]
+            let esAdmin = false;
 
-                let esAdmin = false;
+            if (emailAdmin === 'irdb.com') {
 
-                if (emailAdmin === 'irdb.com') {
+                esAdmin = true;
 
-                    esAdmin = true;
+            }
 
-                }
+            let user = {
+                email: usuario.decodedUser.email,
+                name: usuario.decodedUser.name,
+                admin: esAdmin
+            }
 
-                let user = {
-                    email: tokenUser.email,
-                    name: tokenUser.name,
-                    admin: esAdmin
-                }
-
-                state.decodedUser = user
-            }).catch(err => {
-                console.log(err)
-            })
-            localStorage.setItem('usuario', usuario)
+            localStorage.setItem('usuario', usuario);
+            state.decodedUser = user;
         },
         CLEAR_USER_DATA(state) {
-            localStorage.removeItem('usuario')
-            state.usuario = null
-            state.decodedUser = null
+            localStorage.removeItem('usuario');
+            state.usuario = null;
+            state.decodedUser = null;
         },
     },
     actions: {

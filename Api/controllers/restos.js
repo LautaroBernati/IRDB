@@ -3,12 +3,13 @@ const service = require('../services/index');
 
 function addRestaurant(req, res) {
     service.decodeRestoToken(req.body.token).then(decoded => {
-        Restaurant.findOne({ address: decoded.address })
+        console.log(decoded.address.toUpperCase());
+        Restaurant.findOne({ address: decoded.address.toUpperCase() })
             .then(data => {
                 if (data === null || data == []) {
                     let nuevoResto = new Restaurant({
                         name: decoded.name,
-                        address: decoded.address,
+                        address: decoded.address.toUpperCase(),
                         comments: decoded.comments,
                         dishes: decoded.dishes,
                         points: decoded.points,
@@ -24,7 +25,7 @@ function addRestaurant(req, res) {
                             res.status(500).send(err.message);
                         })
                 } else {
-                    res.status(200).send({ message: 'Ya existe un restaurant con esa direccion' });
+                    res.status(409).send({ message: 'Ya existe un restaurant con esa direccion' });
 
                 }
             }).catch(err => {

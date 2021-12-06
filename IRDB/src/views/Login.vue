@@ -49,8 +49,9 @@ export default {
   methods: {
     async login() {
       try {
-        let tokenUsuario = await UsuariosService.login(this.usuario);
-        this.$store.dispatch("login", { usuario: tokenUsuario });
+        let info = await UsuariosService.login(this.usuario);
+        //console.log(info);
+        this.$store.dispatch("login", { usuario: info.data.token, decodedUser:info.data.usuario });
         this.$router.push({ name: "Home" });
       } catch (err) {
         alert("Usuario incorrecto");

@@ -67,9 +67,13 @@ function regisUsuario(req, res) {
 }
 
 function loginUsuario(req, res) {
+    console.log(req);
     Usuario.findOne({ email: req.body.email }).exec().then(data => {
-        console.log(data)
-
+        
+        let usuario = {
+            name: data.name,
+            email: data.email
+        }
         if (data === null) {
 
             res.status(404).send({ message: 'usuario no encontrado' });
@@ -78,7 +82,7 @@ function loginUsuario(req, res) {
 
         if (bcrypt.compareSync(req.body.password, data.password)) { //compara la pass de la req contra la hasehada de la bd
 
-            res.status(200).send({ token: service.createToken(data) }); //si esta ok, retorna un token
+            res.status(200).send({ token: service.createToken(data), usuario: usuario }); //si esta ok, retorna un token
 
         } else {
 

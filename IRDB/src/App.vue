@@ -15,9 +15,7 @@
           <li class="nav-item" >
             <router-link to="/agregarResto" class="nav-link" v-if="islogin">Agregar Restaurante</router-link>
           </li>
-<!--           <li class="nav-item">
-            <router-link to="/usuarios" class="nav-link" v-if="islogin">Usuarios</router-link>
-          </li> -->
+
           <li class="nav-item" >
             <router-link to="/verRestos" class="nav-link" v-if="islogin">Ver Restaurantes</router-link>
           </li>

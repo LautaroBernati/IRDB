@@ -15,10 +15,10 @@ export default {
     return apiClient.post('/login', usuario);
   },
   getUsuarioId(id) {
-    return apiClient.get('/usuarios/' + id, {headers: {Authorization: `Bearer ${store.default.getters.getToken.usuario.data.token}`}})
+    return apiClient.get('/usuarios/' + id, {headers: {Authorization: `Bearer ${store.default.getters.getToken}`}})
   },
   getUsuario() {
-    return apiClient.get('/usuarios', {headers: {Authorization: `Bearer ${store.default.getters.getToken.usuario.data.token}`}})
+    return apiClient.get('/usuarios', {headers: {Authorization: `Bearer ${store.default.getters.getToken}`}})
   },
   postUsuario(usuario) {
     let token = tokenService.createToken(usuario)
@@ -30,6 +30,6 @@ export default {
   },
   putUsuario(usuario) {
     let token = tokenService.createToken(usuario)
-    return apiClient.put('/modificarUsuario/', {token}, {headers: {Authorization: `Bearer ${store.default.getters.getToken.usuario.data.token}`}})
+    return apiClient.put('/modificarUsuario/', {token}, {headers: {Authorization: `Bearer ${store.default.getters.getToken}`}})
   },
 }

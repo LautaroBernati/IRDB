@@ -46,8 +46,11 @@ export default {
       try {
         await RestaurantesService.postRestaurante(this.restaurante);
         this.$router.push({ name: "Home" });
-      } catch (er) {
-        console.log(er);
+      } catch (err) {
+        alert("Ya existe un restaurant con esa direccion");
+        this.restaurante.name = "";
+        this.restaurante.address = "";
+        this.restaurante.Rtype = "";
       }
     },
   },
